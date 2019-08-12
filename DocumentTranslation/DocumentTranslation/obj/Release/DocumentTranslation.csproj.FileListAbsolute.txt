@@ -1,0 +1,6 @@
+S:\C#\小工具\DocumentTranslation\DocumentTranslation\obj\Release\DocumentTranslation.csprojAssemblyReference.cache
+S:\C#\小工具\DocumentTranslation\DocumentTranslation\obj\Release\DocumentTranslation.Form_Config.resources
+S:\C#\小工具\DocumentTranslation\DocumentTranslation\obj\Release\DocumentTranslation.Form_Main.resources
+S:\C#\小工具\DocumentTranslation\DocumentTranslation\obj\Release\DocumentTranslation.Properties.Resources.resources
+S:\C#\小工具\DocumentTranslation\DocumentTranslation\obj\Release\DocumentTranslation.csproj.GenerateResource.cache
+S:\C#\小工具\DocumentTranslation\DocumentTranslation\obj\Release\DocumentTranslation.csproj.CoreCompileInputs.cache
