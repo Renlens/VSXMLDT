@@ -4,6 +4,6 @@
              xmlns:local="clr-namespace:XmlTranslation"
              StartupUri="MainWindow.xaml">
     <Application.Resources>
-         
+        <ImageBrush x:Key="imgBg" ImageSource="E:\Renlen\项目\GitHub\VSXMLDT\XmlTranslation\XmlTranslation\img\MainBg.jpg" Stretch="UniformToFill" />
     </Application.Resources>
 </Application>

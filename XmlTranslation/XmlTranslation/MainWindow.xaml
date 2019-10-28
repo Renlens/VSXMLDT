@@ -5,8 +5,53 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:XmlTranslation"
         mc:Ignorable="d"
-        Title="MainWindow" Height="450" Width="800">
-    <Grid>
+        Title="文档翻译" Height="450" Width="800"
+        WindowStyle="None"
+        AllowDrop="True"
+        WindowStartupLocation="CenterScreen"
+        MouseDoubleClick="Window_MouseDoubleClick"
+        MouseLeftButtonDown="Window_MouseLeftButtonDown"
+        Background="{StaticResource imgBg}"
+        >
+    <Grid x:Name="gridMain">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="0.1*" MinHeight="25" MaxHeight="50"/>
+            <RowDefinition Height="0.2*" MinHeight="25" MaxHeight="50"/>
+            <RowDefinition />
+        </Grid.RowDefinitions>
+        <Grid x:Name="gridTitle" Grid.Row="0" Background="#88123456">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition />
+                <ColumnDefinition  Width="40"/>
+                <ColumnDefinition  Width="40"/>
+                <ColumnDefinition  Width="40"/>
+            </Grid.ColumnDefinitions>
+            <Grid Grid.Column="0" >
+                <TextBlock Foreground="White" FontSize="26" Margin="30,0,0,0" >文档翻译</TextBlock>
+            </Grid>
+            <Grid Grid.Column="1">
+                <Button Foreground="White" Background="#00000000" FontSize="40" Margin="0,-12,0,0" Click="Button_Click_2" >▽</Button>
+            </Grid>
+            <Grid Grid.Column="2">
+                <Button Foreground="White" Background="#00000000" FontSize="30" Margin="0,-7,0,0" Click="Button_Click_1" >☆</Button>
+            </Grid>
+            <Grid Grid.Column="3">
+                <Button Foreground="White"  Background="#00000000" FontSize="40" Margin="0,-12,0,0" Click="Button_Click" >×</Button>
+            </Grid>
+        </Grid>
+        <StackPanel Orientation="Horizontal" Grid.Row="1">
+            <Grid>
+                <Button x:Name="btnIndex" BorderThickness="2,5,2,2" Width="100" HorizontalAlignment="Left" >首页</Button>
+            </Grid>
+            <Grid>
+                <Button x:Name="btnLoading" BorderThickness="2,5,2,2"  Width="100" HorizontalAlignment="Left" >正在翻译</Button>
+            </Grid>
+            <Grid>
+                <Button x:Name="btnCompleted" BorderThickness="2,5,2,2"  Width="100" HorizontalAlignment="Left" >翻译完成</Button>
+            </Grid>
+        </StackPanel>
+        <Grid x:Name="gridBodyTask" Grid.Row="2">
 
+        </Grid>
     </Grid>
 </Window>
