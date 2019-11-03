@@ -9,11 +9,12 @@ namespace Renlen.FileTranslator
         public IWillTranslateFile File { get; }
         public bool IsStatisticed { get; private set; }
         public string Name { get; private set; }
-        public long FileSize { get; private set; } = -1;
-        public long TextLength { get; private set; } = -1;
+        public long FileSize { get; private set; } = -3;
+        public long TextLength { get; private set; } = -3;
+        public string DirectoryPath { get; private set; }
         public string FullPath { get; private set; }
-        public Language SourceLaneuage { get; set; }
-        public Language TargetLaneuage { get; set; }
+        public Language SourceLanguage { get; set; }
+        public Language TargetLanguage { get; set; }
         public string Output { get; set; }
         public double Progress { get; set; }
         public TranslateState State { get; internal set; }
@@ -30,6 +31,7 @@ namespace Renlen.FileTranslator
                 FullPath = file.FullPath;
             }
             Name = Path.GetFileNameWithoutExtension(FullPath);
+            DirectoryPath = Path.GetDirectoryName(FullPath);
         }
         public void Statistics()
         {

@@ -4,7 +4,7 @@ using System.Data;
 
 namespace Renlen.FileTranslator
 {
-    public abstract class WillTranslateFile : IWillTranslateFile
+    public class WillTranslateFile : IWillTranslateFile
     {
         public string FullPath { get; protected set; }
 

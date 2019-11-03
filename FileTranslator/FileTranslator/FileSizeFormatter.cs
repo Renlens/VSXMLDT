@@ -129,7 +129,16 @@ namespace Renlen.FileTranslator
 
     public static class FileSizeFormatterExtend
     {
-        public static string ToShow(this object value, string format)
+        /// <summary>
+        /// 将 <see cref="long"/> 实例的值转化为用于显示的字符串，并定义其扩展显示。
+        /// <para>包括：</para>
+        /// <para>    S : 将其作为数据大小的值进行显示（单位字节）</para>
+        /// <para>    Z : 将其作为数值大小的值进行显示（以万为组）</para>
+        /// </summary>
+        /// <param name="value"></param>
+        /// <param name="format"></param>
+        /// <returns></returns>
+        public static string ToShow(this long value, string format)
         {
             return string.Format(NumberFormatter.Formatter, $"{{0:{format}}}", value);
         }

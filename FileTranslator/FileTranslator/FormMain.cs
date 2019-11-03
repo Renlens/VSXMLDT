@@ -1,8 +1,10 @@
 ﻿using DevExpress.Utils;
+using DevExpress.XtraGrid.Columns;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
+using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
 using System.Threading.Tasks;
@@ -20,23 +22,46 @@ namespace Renlen.FileTranslator
         private void InitializeControls()
         {
             //
-            // colFileSize
+            // 格式化器
             //
             colFileSize.DisplayFormat.Format = NumberFormatter.Formatter;
-            //
-            // colTextLength
-            //
             colTextLength.DisplayFormat.Format = NumberFormatter.Formatter;
+            //
+            // 设置 viewUpEditLanguage 的列
+            //
+
+            #region 定义列
+            GridColumn colLanguageValue = new GridColumn
+            {
+                FieldName = "Value",
+                Caption = "Value",
+                VisibleIndex = 0
+            };
+            GridColumn colLanguageName = new GridColumn
+            {
+                FieldName = "Name",
+                Caption = "Name",
+                VisibleIndex = 1
+            };
+            GridColumn colLanguageCaption = new GridColumn
+            {
+                FieldName = "Caption",
+                Caption = "Caption",
+                VisibleIndex = 2
+            };
+            #endregion
+
+            viewUpEditLanguage.Columns.AddRange(new GridColumn[]
+            {
+                colLanguageValue,
+                colLanguageName,
+                colLanguageCaption
+            });
         }
         private void SetDataSource()
         {
-            //
-            // upEditLanguage
-            //
-            upEditLanguage.DataSource = Language.GetLanguagesAnyDefault();
-            //
-            // gridControl1
-            //
+            upEditSourceLanguage.DataSource = Language.GetLanguages();
+            upEditTargetLanguage.DataSource = Language.GetLanguages(LanguageFiter.RemoveAuto);
             gridControl1.DataSource = Files;
         }
         private void GetConfig()
@@ -45,10 +70,11 @@ namespace Renlen.FileTranslator
         }
         private void LoadFiles()
         {
-            Files.AddRange(TestFile.CreateTestFiles(100).Select(file => new TranslatingFile(file)));
+            Files.AddRange(TestFile.CreateTestFiles(20).Select(file => new TranslatingFile(file)));
         }
         private void RefreshFiles()
         {
+            Language[] languages = Language.GetLanguages();
             Files.ForEach(file =>
             {
                 file.Statistics();
@@ -58,6 +84,12 @@ namespace Renlen.FileTranslator
                 {
                     file.Progress = 100;
                 }
+                file.SourceLanguage = languages[GRandom.Next(0, languages.Length)];
+                file.TargetLanguage = languages[GRandom.Next(2, languages.Length)];
+                if (file.SourceLanguage == file.TargetLanguage)
+                {
+                    file.SourceLanguage = languages[1];
+                }
             });
         }
 
@@ -65,45 +97,16 @@ namespace Renlen.FileTranslator
         private void Form1_Load(object sender, EventArgs e)
         {
             InitializeControls();
-            SetDataSource();
             GetConfig();
+            SetDataSource();
             LoadFiles();
             RefreshFiles();
         }
+
+        private void simpleButton1_Click(object sender, EventArgs e)
+        {
+            Debug.WriteLine("在此停顿!");
+        }
     }
 
-
-    class TestFile : WillTranslateFile
-    {
-        public static TestFile[] CreateTestFiles()
-        {
-            return CreateTestFiles(GRandom.Next(5, 50));
-        }
-        public static TestFile[] CreateTestFiles(int n)
-        {
-            if (n <= 0) n = 10;
-            int length = n.ToString().Length;
-            TestFile[] files = new TestFile[n];
-            for (int i = 0; i < n; i++)
-            {
-                files[i] = new TestFile($"TestFile{(i + 1).ToString().PadLeft(length, '0')}") { IsFile = true };
-            }
-            return files;
-        }
-        public TestFile(string path)
-        {
-            FullPath = path;
-        }
-        public override long GetFileSize()
-        {
-            return GRandom.Next();
-        }
-
-        public override IEnumerable<ITranslatingLine> GetTranslatingLines()
-        {
-            yield return new TranslatingLine("test");
-            yield return new TranslatingLine("text");
-            yield return new TranslatingLine("end");
-        }
-    }
 }

@@ -33,41 +33,50 @@
             this.colName = new DevExpress.XtraGrid.Columns.GridColumn();
             this.colFileSize = new DevExpress.XtraGrid.Columns.GridColumn();
             this.colTextLength = new DevExpress.XtraGrid.Columns.GridColumn();
-            this.colFullPath = new DevExpress.XtraGrid.Columns.GridColumn();
+            this.colDirectoryPath = new DevExpress.XtraGrid.Columns.GridColumn();
             this.colSourceLanguage = new DevExpress.XtraGrid.Columns.GridColumn();
-            this.upEditLanguage = new DevExpress.XtraEditors.Repository.RepositoryItemGridLookUpEdit();
+            this.upEditSourceLanguage = new DevExpress.XtraEditors.Repository.RepositoryItemGridLookUpEdit();
             this.viewUpEditLanguage = new DevExpress.XtraGrid.Views.Grid.GridView();
             this.colTargetLanguage = new DevExpress.XtraGrid.Columns.GridColumn();
+            this.upEditTargetLanguage = new DevExpress.XtraEditors.Repository.RepositoryItemGridLookUpEdit();
             this.colOutput = new DevExpress.XtraGrid.Columns.GridColumn();
             this.upEditOutput = new DevExpress.XtraEditors.Repository.RepositoryItemGridLookUpEdit();
-            this.repositoryItemGridLookUpEdit2View = new DevExpress.XtraGrid.Views.Grid.GridView();
+            this.viewUpEditOutput = new DevExpress.XtraGrid.Views.Grid.GridView();
             this.colProgress = new DevExpress.XtraGrid.Columns.GridColumn();
             this.repositoryItemProgressBar1 = new DevExpress.XtraEditors.Repository.RepositoryItemProgressBar();
             this.colState = new DevExpress.XtraGrid.Columns.GridColumn();
             this.colOperation = new DevExpress.XtraGrid.Columns.GridColumn();
             this.repositoryItemButtonEdit1 = new DevExpress.XtraEditors.Repository.RepositoryItemButtonEdit();
             this.colTargetLangu = new DevExpress.XtraGrid.Columns.GridColumn();
+            this.simpleButton1 = new DevExpress.XtraEditors.SimpleButton();
             ((System.ComponentModel.ISupportInitialize)(this.gridControl1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.gridView1)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.upEditLanguage)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.upEditSourceLanguage)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.viewUpEditLanguage)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.upEditTargetLanguage)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.upEditOutput)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.repositoryItemGridLookUpEdit2View)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.viewUpEditOutput)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.repositoryItemProgressBar1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.repositoryItemButtonEdit1)).BeginInit();
             this.SuspendLayout();
             // 
             // gridControl1
             // 
-            this.gridControl1.Location = new System.Drawing.Point(12, 12);
+            this.gridControl1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.gridControl1.EmbeddedNavigator.Margin = new System.Windows.Forms.Padding(4);
+            this.gridControl1.Location = new System.Drawing.Point(16, 55);
             this.gridControl1.MainView = this.gridView1;
+            this.gridControl1.Margin = new System.Windows.Forms.Padding(4);
             this.gridControl1.Name = "gridControl1";
             this.gridControl1.RepositoryItems.AddRange(new DevExpress.XtraEditors.Repository.RepositoryItem[] {
-            this.upEditLanguage,
+            this.upEditSourceLanguage,
             this.upEditOutput,
             this.repositoryItemProgressBar1,
-            this.repositoryItemButtonEdit1});
-            this.gridControl1.Size = new System.Drawing.Size(1207, 614);
+            this.repositoryItemButtonEdit1,
+            this.upEditTargetLanguage});
+            this.gridControl1.Size = new System.Drawing.Size(1466, 618);
             this.gridControl1.TabIndex = 0;
             this.gridControl1.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] {
             this.gridView1});
@@ -78,13 +87,14 @@
             this.colName,
             this.colFileSize,
             this.colTextLength,
-            this.colFullPath,
+            this.colDirectoryPath,
             this.colSourceLanguage,
             this.colTargetLanguage,
             this.colOutput,
             this.colProgress,
             this.colState,
             this.colOperation});
+            this.gridView1.DetailHeight = 437;
             this.gridView1.GridControl = this.gridControl1;
             this.gridView1.Name = "gridView1";
             this.gridView1.OptionsView.ShowGroupPanel = false;
@@ -93,13 +103,14 @@
             // 
             this.colName.Caption = "File Name";
             this.colName.FieldName = "Name";
+            this.colName.MinWidth = 27;
             this.colName.Name = "colName";
             this.colName.OptionsColumn.AllowEdit = false;
             this.colName.OptionsColumn.ReadOnly = true;
             this.colName.OptionsFilter.AllowAutoFilter = false;
             this.colName.Visible = true;
             this.colName.VisibleIndex = 0;
-            this.colName.Width = 90;
+            this.colName.Width = 125;
             // 
             // colFileSize
             // 
@@ -107,13 +118,14 @@
             this.colFileSize.DisplayFormat.FormatString = "S5";
             this.colFileSize.DisplayFormat.FormatType = DevExpress.Utils.FormatType.Custom;
             this.colFileSize.FieldName = "FileSize";
+            this.colFileSize.MinWidth = 27;
             this.colFileSize.Name = "colFileSize";
             this.colFileSize.OptionsColumn.AllowEdit = false;
             this.colFileSize.OptionsColumn.ReadOnly = true;
             this.colFileSize.OptionsFilter.AllowAutoFilter = false;
             this.colFileSize.Visible = true;
             this.colFileSize.VisibleIndex = 1;
-            this.colFileSize.Width = 83;
+            this.colFileSize.Width = 115;
             // 
             // colTextLength
             // 
@@ -121,46 +133,50 @@
             this.colTextLength.DisplayFormat.FormatString = "Z5";
             this.colTextLength.DisplayFormat.FormatType = DevExpress.Utils.FormatType.Custom;
             this.colTextLength.FieldName = "TextLength";
+            this.colTextLength.MinWidth = 27;
             this.colTextLength.Name = "colTextLength";
             this.colTextLength.OptionsColumn.AllowEdit = false;
             this.colTextLength.OptionsColumn.ReadOnly = true;
             this.colTextLength.OptionsFilter.AllowAutoFilter = false;
             this.colTextLength.Visible = true;
             this.colTextLength.VisibleIndex = 2;
-            this.colTextLength.Width = 83;
+            this.colTextLength.Width = 115;
             // 
-            // colFullPath
+            // colDirectoryPath
             // 
-            this.colFullPath.Caption = "Full Path";
-            this.colFullPath.FieldName = "FullPath";
-            this.colFullPath.Name = "colFullPath";
-            this.colFullPath.OptionsColumn.AllowEdit = false;
-            this.colFullPath.OptionsColumn.ReadOnly = true;
-            this.colFullPath.OptionsFilter.AllowAutoFilter = false;
-            this.colFullPath.Visible = true;
-            this.colFullPath.VisibleIndex = 3;
-            this.colFullPath.Width = 82;
+            this.colDirectoryPath.Caption = "Directory Path";
+            this.colDirectoryPath.FieldName = "DirectoryPath";
+            this.colDirectoryPath.MinWidth = 27;
+            this.colDirectoryPath.Name = "colDirectoryPath";
+            this.colDirectoryPath.OptionsColumn.AllowEdit = false;
+            this.colDirectoryPath.OptionsColumn.ReadOnly = true;
+            this.colDirectoryPath.OptionsFilter.AllowAutoFilter = false;
+            this.colDirectoryPath.Visible = true;
+            this.colDirectoryPath.VisibleIndex = 3;
+            this.colDirectoryPath.Width = 113;
             // 
             // colSourceLanguage
             // 
             this.colSourceLanguage.Caption = "Source Language";
-            this.colSourceLanguage.ColumnEdit = this.upEditLanguage;
+            this.colSourceLanguage.ColumnEdit = this.upEditSourceLanguage;
             this.colSourceLanguage.FieldName = "SourceLanguage";
+            this.colSourceLanguage.FilterMode = DevExpress.XtraGrid.ColumnFilterMode.DisplayText;
+            this.colSourceLanguage.MinWidth = 27;
             this.colSourceLanguage.Name = "colSourceLanguage";
             this.colSourceLanguage.Visible = true;
             this.colSourceLanguage.VisibleIndex = 4;
-            this.colSourceLanguage.Width = 136;
+            this.colSourceLanguage.Width = 188;
             // 
-            // upEditLanguage
+            // upEditSourceLanguage
             // 
-            this.upEditLanguage.AutoHeight = false;
-            this.upEditLanguage.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
+            this.upEditSourceLanguage.AutoHeight = false;
+            this.upEditSourceLanguage.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
             new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
-            this.upEditLanguage.DisplayMember = "Caption";
-            this.upEditLanguage.Name = "upEditLanguage";
-            this.upEditLanguage.NullText = "Default";
-            this.upEditLanguage.PopupView = this.viewUpEditLanguage;
-            this.upEditLanguage.ValueMember = "Value";
+            this.upEditSourceLanguage.DisplayMember = "This";
+            this.upEditSourceLanguage.Name = "upEditSourceLanguage";
+            this.upEditSourceLanguage.NullText = "Null";
+            this.upEditSourceLanguage.PopupView = this.viewUpEditLanguage;
+            this.upEditSourceLanguage.ValueMember = "This";
             // 
             // viewUpEditLanguage
             // 
@@ -172,22 +188,33 @@
             // colTargetLanguage
             // 
             this.colTargetLanguage.Caption = "Target Language";
-            this.colTargetLanguage.ColumnEdit = this.upEditLanguage;
+            this.colTargetLanguage.ColumnEdit = this.upEditTargetLanguage;
             this.colTargetLanguage.FieldName = "TargetLanguage";
+            this.colTargetLanguage.MinWidth = 27;
             this.colTargetLanguage.Name = "colTargetLanguage";
             this.colTargetLanguage.Visible = true;
             this.colTargetLanguage.VisibleIndex = 5;
-            this.colTargetLanguage.Width = 135;
+            this.colTargetLanguage.Width = 187;
+            // 
+            // upEditTargetLanguage
+            // 
+            this.upEditTargetLanguage.AutoHeight = false;
+            this.upEditTargetLanguage.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
+            new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
+            this.upEditTargetLanguage.Name = "upEditTargetLanguage";
+            this.upEditTargetLanguage.NullText = "Null";
+            this.upEditTargetLanguage.PopupView = this.viewUpEditLanguage;
             // 
             // colOutput
             // 
             this.colOutput.Caption = "Output";
             this.colOutput.ColumnEdit = this.upEditOutput;
             this.colOutput.FieldName = "Output";
+            this.colOutput.MinWidth = 27;
             this.colOutput.Name = "colOutput";
             this.colOutput.Visible = true;
             this.colOutput.VisibleIndex = 6;
-            this.colOutput.Width = 113;
+            this.colOutput.Width = 157;
             // 
             // upEditOutput
             // 
@@ -195,25 +222,26 @@
             this.upEditOutput.Buttons.AddRange(new DevExpress.XtraEditors.Controls.EditorButton[] {
             new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
             this.upEditOutput.Name = "upEditOutput";
-            this.upEditOutput.NullText = "Default";
-            this.upEditOutput.PopupView = this.repositoryItemGridLookUpEdit2View;
+            this.upEditOutput.NullText = "Null";
+            this.upEditOutput.PopupView = this.viewUpEditOutput;
             // 
-            // repositoryItemGridLookUpEdit2View
+            // viewUpEditOutput
             // 
-            this.repositoryItemGridLookUpEdit2View.FocusRectStyle = DevExpress.XtraGrid.Views.Grid.DrawFocusRectStyle.RowFocus;
-            this.repositoryItemGridLookUpEdit2View.Name = "repositoryItemGridLookUpEdit2View";
-            this.repositoryItemGridLookUpEdit2View.OptionsSelection.EnableAppearanceFocusedCell = false;
-            this.repositoryItemGridLookUpEdit2View.OptionsView.ShowGroupPanel = false;
+            this.viewUpEditOutput.FocusRectStyle = DevExpress.XtraGrid.Views.Grid.DrawFocusRectStyle.RowFocus;
+            this.viewUpEditOutput.Name = "viewUpEditOutput";
+            this.viewUpEditOutput.OptionsSelection.EnableAppearanceFocusedCell = false;
+            this.viewUpEditOutput.OptionsView.ShowGroupPanel = false;
             // 
             // colProgress
             // 
             this.colProgress.Caption = "Progress";
             this.colProgress.ColumnEdit = this.repositoryItemProgressBar1;
             this.colProgress.FieldName = "Progress";
+            this.colProgress.MinWidth = 27;
             this.colProgress.Name = "colProgress";
             this.colProgress.Visible = true;
             this.colProgress.VisibleIndex = 7;
-            this.colProgress.Width = 134;
+            this.colProgress.Width = 230;
             // 
             // repositoryItemProgressBar1
             // 
@@ -223,19 +251,21 @@
             // 
             this.colState.Caption = "State";
             this.colState.FieldName = "State";
+            this.colState.MinWidth = 27;
             this.colState.Name = "colState";
             this.colState.Visible = true;
             this.colState.VisibleIndex = 8;
-            this.colState.Width = 92;
+            this.colState.Width = 100;
             // 
             // colOperation
             // 
             this.colOperation.Caption = "Operation";
             this.colOperation.ColumnEdit = this.repositoryItemButtonEdit1;
+            this.colOperation.MinWidth = 27;
             this.colOperation.Name = "colOperation";
             this.colOperation.Visible = true;
             this.colOperation.VisibleIndex = 9;
-            this.colOperation.Width = 152;
+            this.colOperation.Width = 200;
             // 
             // repositoryItemButtonEdit1
             // 
@@ -247,27 +277,39 @@
             // colTargetLangu
             // 
             this.colTargetLangu.Caption = "gridColumn6";
-            this.colTargetLangu.ColumnEdit = this.upEditLanguage;
+            this.colTargetLangu.ColumnEdit = this.upEditSourceLanguage;
             this.colTargetLangu.Name = "colTargetLangu";
             this.colTargetLangu.Visible = true;
             this.colTargetLangu.VisibleIndex = 5;
             // 
+            // simpleButton1
+            // 
+            this.simpleButton1.Location = new System.Drawing.Point(1362, 12);
+            this.simpleButton1.Name = "simpleButton1";
+            this.simpleButton1.Size = new System.Drawing.Size(81, 29);
+            this.simpleButton1.TabIndex = 1;
+            this.simpleButton1.Text = "Test";
+            this.simpleButton1.Click += new System.EventHandler(this.simpleButton1_Click);
+            // 
             // FormMain
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1231, 638);
+            this.ClientSize = new System.Drawing.Size(1495, 688);
+            this.Controls.Add(this.simpleButton1);
             this.Controls.Add(this.gridControl1);
+            this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "FormMain";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
-            this.Text = "文件翻译";
+            this.Text = "File Translator";
             this.Load += new System.EventHandler(this.Form1_Load);
             ((System.ComponentModel.ISupportInitialize)(this.gridControl1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.gridView1)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.upEditLanguage)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.upEditSourceLanguage)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.viewUpEditLanguage)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.upEditTargetLanguage)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.upEditOutput)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.repositoryItemGridLookUpEdit2View)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.viewUpEditOutput)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.repositoryItemProgressBar1)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.repositoryItemButtonEdit1)).EndInit();
             this.ResumeLayout(false);
@@ -281,20 +323,22 @@
         private DevExpress.XtraGrid.Columns.GridColumn colName;
         private DevExpress.XtraGrid.Columns.GridColumn colFileSize;
         private DevExpress.XtraGrid.Columns.GridColumn colTextLength;
-        private DevExpress.XtraGrid.Columns.GridColumn colFullPath;
+        private DevExpress.XtraGrid.Columns.GridColumn colDirectoryPath;
         private DevExpress.XtraGrid.Columns.GridColumn colSourceLanguage;
         private DevExpress.XtraGrid.Columns.GridColumn colTargetLanguage;
         private DevExpress.XtraGrid.Columns.GridColumn colOutput;
         private DevExpress.XtraGrid.Columns.GridColumn colProgress;
         private DevExpress.XtraGrid.Columns.GridColumn colState;
-        private DevExpress.XtraEditors.Repository.RepositoryItemGridLookUpEdit upEditLanguage;
+        private DevExpress.XtraEditors.Repository.RepositoryItemGridLookUpEdit upEditSourceLanguage;
         private DevExpress.XtraGrid.Views.Grid.GridView viewUpEditLanguage;
         private DevExpress.XtraGrid.Columns.GridColumn colTargetLangu;
         private DevExpress.XtraEditors.Repository.RepositoryItemGridLookUpEdit upEditOutput;
-        private DevExpress.XtraGrid.Views.Grid.GridView repositoryItemGridLookUpEdit2View;
+        private DevExpress.XtraGrid.Views.Grid.GridView viewUpEditOutput;
         private DevExpress.XtraEditors.Repository.RepositoryItemProgressBar repositoryItemProgressBar1;
         private DevExpress.XtraGrid.Columns.GridColumn colOperation;
         private DevExpress.XtraEditors.Repository.RepositoryItemButtonEdit repositoryItemButtonEdit1;
+        private DevExpress.XtraEditors.SimpleButton simpleButton1;
+        private DevExpress.XtraEditors.Repository.RepositoryItemGridLookUpEdit upEditTargetLanguage;
     }
 }
 

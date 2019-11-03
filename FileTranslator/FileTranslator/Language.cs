@@ -1,4 +1,5 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Diagnostics;
 using System.Linq;
@@ -9,16 +10,22 @@ namespace Renlen.FileTranslator
     /// <summary>
     /// 支持翻译的语言列表。
     /// </summary>
-    public sealed class Language
+    public sealed class Language : IComparable<Language>, IComparable
     {
         #region 枚举
 
         /// <summary>
+        /// 应用默认
+        /// </summary>
+        [LanguageValue("default")]
+        [LanguageCaption("应用默认")]
+        public static Language Default { get; } = new Language("Default");
+        /// <summary>
         /// 自动检测
-        ///// </summary>
-        //[LanguageValue("auto")]
-        //[LanguageCaption("自动检测")]
-        //public static Language Auto { get; } = new Language("Auto");
+        /// </summary>
+        [LanguageValue("auto")]
+        [LanguageCaption("自动检测")]
+        public static Language Auto { get; } = new Language("Auto");
         /// <summary>
         /// 中文
         /// </summary>
@@ -193,30 +200,38 @@ namespace Renlen.FileTranslator
         public static Language[] GetLanguages()
         {
             Type type = typeof(Language);
-            Language[] languages = type.GetProperties(BindingFlags.Public | BindingFlags.Static).Select(p => (Language)p.GetValue(null)).ToArray();
-            return languages;
+            IEnumerable<Language> languages = type.GetProperties(BindingFlags.Public | BindingFlags.Static).Select(p => (Language)p.GetValue(null));
+            return languages.ToArray();
         }
-        public static Language[] GetLanguagesAnyAuto()
+        public static Language[] GetLanguages(LanguageFiter fiter)
         {
-            Language[] languages =
+            return fiter switch
             {
-                new Language("Auto","auto","自动检测")
+                LanguageFiter.None => GetLanguages(),
+                LanguageFiter.RemoveAuto => GetLanguages(Auto),
+                LanguageFiter.RemoveDefault => GetLanguages(Default),
+                LanguageFiter.RemoveAutoAndDefault => GetLanguages(Auto, Default),
+                _ => GetLanguages(),
             };
-            return languages.Union(GetLanguages()).ToArray();
         }
-        public static Language[] GetLanguagesAnyDefault()
+        public static Language[] GetLanguages(params Language[] removeList)
         {
-            Language[] languages =
+            Type type = typeof(Language);
+            IEnumerable<Language> languages = type.GetProperties(BindingFlags.Public | BindingFlags.Static).Select(p => (Language)p.GetValue(null));
+            if (removeList == null || removeList.Length == 0)
             {
-                new Language("Default","default","应用默认"),
-                new Language("Auto","auto","自动检测")
-            };
-            return languages.Union(GetLanguages()).ToArray();
+                return languages.ToArray();
+            }
+            else
+            {
+                languages = languages.Except(removeList);
+                return languages.ToArray();
+            }
         }
-
         public string Name { get; }
         public string Value { get; }
         public string Caption { get; }
+        public Language This => this;
 
         private Language(string name)
         {
@@ -240,16 +255,82 @@ namespace Renlen.FileTranslator
                 }
             }
         }
-        private Language(string name, string value, string caption)
-        {
-            Name = name;
-            Value = value;
-            Caption = caption;
-        }
+        //private Language(string name, string value, string caption)
+        //{
+        //    Name = name;
+        //    Value = value;
+        //    Caption = caption;
+        //}
 
         public override string ToString()
         {
-            return Caption;
+            return Name;
         }
+
+        public int CompareTo(Language other)
+        {
+            return Name.CompareTo(other.Name);
+        }
+
+        int IComparable.CompareTo(object obj)
+        {
+            if (obj is Language o)
+            {
+                return CompareTo(o);
+            }
+            else
+            {
+                throw new ArgumentException("Language 类型无法与其他类型进行比较。", nameof(obj));
+            }
+        }
+
+        #region 重载 (未使用)
+        /// <summary>
+        /// 确定两个对象的引用是否相等
+        /// </summary>
+        /// <param name="obj"></param>
+        ///// <returns></returns>
+        //public override bool Equals(object obj)
+        //{
+        //    if (obj == null || typeof(Language) != obj.GetType())
+        //    {
+        //        return false;
+        //    }
+        //    return this == (Language)obj;
+        //}
+        //public override int GetHashCode()
+        //{
+        //    return Value.GetHashCode() ^ Name.GetHashCode();
+        //}
+        ///// <summary>
+        ///// 如果 <see cref="Value"/> 和 <see cref="Name"/> 均相等，则返回 <see langword="true"/> .
+        ///// </summary>
+        ///// <param name="obj1"></param>
+        ///// <param name="obj2"></param>
+        ///// <returns></returns>
+        //public static bool operator ==(Language obj1, Language obj2)
+        //{
+        //    return obj1?.Value == obj2?.Value && obj1?.Name == obj2?.Name;
+        //}
+        ///// <summary>
+        ///// 如果 <see cref="Value"/> 和 <see cref="Name"/> 有一个不相等，则返回 <see langword="true"/> .
+        ///// </summary>
+        ///// <param name="obj1"></param>
+        ///// <param name="obj2"></param>
+        ///// <returns></returns>
+        //public static bool operator !=(Language obj1, Language obj2)
+        //{
+        //    return obj1?.Value != obj2?.Value && obj1?.Name != obj2?.Name;
+        //}
+        #endregion
+    }
+
+    [Flags]
+    public enum LanguageFiter
+    {
+        None = 0,
+        RemoveAuto = 1,
+        RemoveDefault = 2,
+        RemoveAutoAndDefault = RemoveAuto | RemoveDefault
     }
 }
