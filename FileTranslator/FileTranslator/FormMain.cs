@@ -70,7 +70,7 @@ namespace Renlen.FileTranslator
         }
         private void LoadFiles()
         {
-            Files.AddRange(TestFile.CreateTestFiles(20).Select(file => new TranslatingFile(file)));
+            Files.AddRange(TestFile.CreateTestFiles(100000).Select(file => new TranslatingFile(file)));
         }
         private void RefreshFiles()
         {
