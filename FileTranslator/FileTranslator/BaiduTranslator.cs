@@ -95,6 +95,11 @@ namespace Renlen.FileTranslator
             return r;
             //return JsonDocument.LoadJson(r);
         }
+
+        public static string TestTranslation(string str)
+        {
+            return "翻译结果";
+        }
     }
 
     public enum TransferProtocolType

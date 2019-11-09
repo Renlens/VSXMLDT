@@ -56,5 +56,20 @@ namespace Renlen.FileTranslator
         {
             await Task.Run(Statistics);
         }
+
+        public void StartTranslate()
+        {
+            Translate();
+        }
+
+        private void Translate()
+        {
+            while (Lines.Count > 0)
+            {
+                Lines.TryDequeue(out ITranslatingLine line);
+                line.Result = BaiduTranslator.TestTranslation(line.Text);
+                line.CommitResult();
+            }
+        }
     }
 }

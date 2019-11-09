@@ -23,6 +23,7 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <LangVersion>8.0</LangVersion>
+    <DocumentationFile>bin\Debug\Renlen.FileTranslator.xml</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -59,7 +60,6 @@
     <Compile Include="BaiduTranslator.cs" />
     <Compile Include="BaiduUser.cs" />
     <Compile Include="BaiduUserType.cs" />
-    <Compile Include="FileSize.cs" />
     <Compile Include="FileSizeFormatter.cs" />
     <Compile Include="FormMain.cs">
       <SubType>Form</SubType>
@@ -71,7 +71,9 @@
     <Compile Include="IReadWrite.cs" />
     <Compile Include="IReadWriter.cs" />
     <Compile Include="ITranslatingLine.cs" />
+    <Compile Include="ITranslatingLineReadWrite.cs" />
     <Compile Include="IWillTranslateFile.cs" />
+    <Compile Include="IWillTranslateFileReadWrite.cs" />
     <Compile Include="Language.cs" />
     <Compile Include="LanguageCaptionAttribute.cs" />
     <Compile Include="LanguageValue.cs" />
@@ -85,6 +87,13 @@
     <Compile Include="TranslatingFile.cs" />
     <Compile Include="TranslatingLine.cs" />
     <Compile Include="WillTranslateFile.cs" />
+    <Compile Include="XmlFileOfVS.cs" />
+    <Compile Include="XmlFileOfVS.ElementType.cs" />
+    <Compile Include="XmlFileOfVS.FileSize.cs" />
+    <Compile Include="XmlFileOfVS.LineType.cs" />
+    <Compile Include="XmlFileOfVS.ReadWriter.cs" />
+    <Compile Include="XmlFileOfVS.XmlFileOfVSLine.cs" />
+    <Compile Include="XmlFileOfVS.XmlFileOfVSLine.ReadWriter.cs" />
     <EmbeddedResource Include="FormMain.resx">
       <DependentUpon>FormMain.cs</DependentUpon>
     </EmbeddedResource>

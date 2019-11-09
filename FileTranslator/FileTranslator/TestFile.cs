@@ -11,7 +11,7 @@ namespace Renlen.FileTranslator
         }
         public static TestFile[] CreateTestFiles(int n)
         {
-            if (n <= 0) n = 10;
+            if (n < 0) n = 10;
             int length = n.ToString().Length;
             TestFile[] files = new TestFile[n];
             for (int i = 0; i < n; i++)
