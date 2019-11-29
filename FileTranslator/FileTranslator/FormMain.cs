@@ -26,8 +26,8 @@ namespace Renlen.FileTranslator
             //
             // 格式化器
             //
-            colFileSize.DisplayFormat.Format = NumberFormatter.Formatter;
-            colTextLength.DisplayFormat.Format = NumberFormatter.Formatter;
+            colFileSize.DisplayFormat.Format = FileSizeFormatter.Formatter;
+            colTextLength.DisplayFormat.Format = FileSizeFormatter.Formatter;
             //
             // 设置 viewUpEditLanguage 的列
             //
