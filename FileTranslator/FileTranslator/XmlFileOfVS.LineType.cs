@@ -6,9 +6,7 @@
         private enum LineType
         {
             Text,
-            SingleElement,
-            Multielement,
-            Link
+            Element,
         }
     }
 

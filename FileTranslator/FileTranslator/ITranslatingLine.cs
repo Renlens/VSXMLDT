@@ -10,6 +10,10 @@
         /// </summary>
         string Text { get; }
         /// <summary>
+        /// 结果代码
+        /// </summary>
+        ResultCode Code { get; set; }
+        /// <summary>
         /// 翻译结果。
         /// </summary>
         string Result { get; set; }
