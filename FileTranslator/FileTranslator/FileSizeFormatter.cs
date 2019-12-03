@@ -3,9 +3,9 @@ using System.Globalization;
 
 namespace Renlen.FileTranslator
 {
-    public class NumberFormatter : IFormatProvider, ICustomFormatter
+    public class FileSizeFormatter : IFormatProvider, ICustomFormatter
     {
-        public static NumberFormatter Formatter { get; } = new NumberFormatter();
+        public static FileSizeFormatter Formatter { get; } = new FileSizeFormatter();
         public object GetFormat(Type formatType)
         {
             if (formatType == typeof(ICustomFormatter))
@@ -140,7 +140,7 @@ namespace Renlen.FileTranslator
         /// <returns></returns>
         public static string ToShow(this long value, string format)
         {
-            return string.Format(NumberFormatter.Formatter, $"{{0:{format}}}", value);
+            return string.Format(FileSizeFormatter.Formatter, $"{{0:{format}}}", value);
         }
     }
 }

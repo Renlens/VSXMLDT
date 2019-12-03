@@ -26,21 +26,26 @@ namespace Renlen.FileTranslator
             returns = 0b_00000001_00000000_00000000,
             value = 0b_00000010_00000000_00000000,
             /// <summary>
+            /// 表示不是一个元素，而是作为一个类别
+            /// </summary>
+            NoElement = 0b_10000000_00000000_00000000,
+            /// <summary>
             /// 表示此元素应插入到文本中翻译
             /// </summary>
-            Insert = c | see | code | seealso | example | paramref | permission | typeparamref,
+            Insert = NoElement | c | see | code | seealso | example | paramref | permission | typeparamref,
             /// <summary>
             /// 表示此元素应单独翻译
             /// </summary>
-            Separate = para | param | summary | exception | typeparam | remarks | returns | value,
+            Separate = NoElement | para | param | summary | exception | typeparam | remarks | returns | value,
             /// <summary>
             /// 表示此元素应保持原样
             /// </summary>
-            Skip = include,
+            Skip = NoElement | include,
             /// <summary>
             /// 表示此元素应单独处理，并将前后元素分开
             /// </summary>
-            Breakpoint = Separate | Skip
+            Breakpoint = NoElement | Separate | Skip,
+            TrimSpeac = NoElement | 0
         }
     }
 }

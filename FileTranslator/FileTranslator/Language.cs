@@ -12,6 +12,8 @@ namespace Renlen.FileTranslator
     /// </summary>
     public sealed class Language : IComparable<Language>, IComparable
     {
+        private const BindingFlags PublicStaticMemberFlag = BindingFlags.Public | BindingFlags.Static;
+
         #region 枚举
 
         /// <summary>
@@ -197,12 +199,21 @@ namespace Renlen.FileTranslator
 
         #endregion
 
+        /// <summary>
+        /// 获取所有语言。并可使用其重载自定义筛选指定的语言。
+        /// </summary>
+        /// <returns></returns>
         public static Language[] GetLanguages()
         {
             Type type = typeof(Language);
-            IEnumerable<Language> languages = type.GetProperties(BindingFlags.Public | BindingFlags.Static).Select(p => (Language)p.GetValue(null));
+            IEnumerable<Language> languages = type.GetProperties(PublicStaticMemberFlag).Select(p => (Language)p.GetValue(null));
             return languages.ToArray();
         }
+        /// <summary>
+        /// 获取使用指定筛选枚举筛选后的语言数组。并可使用其重载自定义筛选指定的语言。
+        /// </summary>
+        /// <param name="fiter"></param>
+        /// <returns></returns>
         public static Language[] GetLanguages(LanguageFiter fiter)
         {
             return fiter switch
@@ -214,10 +225,15 @@ namespace Renlen.FileTranslator
                 _ => GetLanguages(),
             };
         }
+        /// <summary>
+        /// 获取筛选后的语言数组。它是所有语言去掉指定语言数字的结果。
+        /// </summary>
+        /// <param name="removeList"></param>
+        /// <returns></returns>
         public static Language[] GetLanguages(params Language[] removeList)
         {
             Type type = typeof(Language);
-            IEnumerable<Language> languages = type.GetProperties(BindingFlags.Public | BindingFlags.Static).Select(p => (Language)p.GetValue(null));
+            IEnumerable<Language> languages = type.GetProperties(PublicStaticMemberFlag).Select(p => (Language)p.GetValue(null));
             if (removeList == null || removeList.Length == 0)
             {
                 return languages.ToArray();
@@ -228,15 +244,27 @@ namespace Renlen.FileTranslator
                 return languages.ToArray();
             }
         }
+        /// <summary>
+        /// 语言的名称。
+        /// </summary>
         public string Name { get; }
+        /// <summary>
+        /// 语言的值。
+        /// </summary>
         public string Value { get; }
+        /// <summary>
+        /// 语言的说明。
+        /// </summary>
         public string Caption { get; }
+        /// <summary>
+        /// 表示当前对象。可能会用到它。
+        /// </summary>
         public Language This => this;
 
         private Language(string name)
         {
             Type type = typeof(Language);
-            PropertyInfo info = type.GetProperty(name, BindingFlags.Public | BindingFlags.Static);
+            PropertyInfo info = type.GetProperty(name, PublicStaticMemberFlag);
             if (info == null)
                 throw new ArgumentException("无效的语言名称。", nameof(name));
             else
@@ -245,7 +273,7 @@ namespace Renlen.FileTranslator
                 LanguageValueAttribute value = info.GetCustomAttribute<LanguageValueAttribute>();
                 if (value == null)
                 {
-                    throw new Exception("未在此名称的属性上找到 LanguageValueAttribute 特性。");
+                    throw new TypeLoadException("未在此名称的属性上找到 LanguageValueAttribute 特性。");
                 }
                 Value = value.Value;
                 LanguageCaptionAttribute caption = info.GetCustomAttribute<LanguageCaptionAttribute>();
@@ -255,18 +283,26 @@ namespace Renlen.FileTranslator
                 }
             }
         }
-        //private Language(string name, string value, string caption)
+
+        //private Language(string name, string caption) : this(name)
         //{
-        //    Name = name;
-        //    Value = value;
         //    Caption = caption;
         //}
 
+        /// <summary>
+        /// 获取语言的名称
+        /// </summary>
+        /// <returns></returns>
         public override string ToString()
         {
             return Name;
         }
 
+        /// <summary>
+        /// 与另一个语言对象比较。通常用于分组和排序。
+        /// </summary>
+        /// <param name="other"></param>
+        /// <returns></returns>
         public int CompareTo(Language other)
         {
             return Name.CompareTo(other.Name);
@@ -325,12 +361,27 @@ namespace Renlen.FileTranslator
         #endregion
     }
 
+    /// <summary>
+    /// 语言筛选器
+    /// </summary>
     [Flags]
     public enum LanguageFiter
     {
+        /// <summary>
+        /// 不执行筛选。
+        /// </summary>
         None = 0,
+        /// <summary>
+        /// 移除自动识别。
+        /// </summary>
         RemoveAuto = 1,
+        /// <summary>
+        /// 移除使用默认语言。
+        /// </summary>
         RemoveDefault = 2,
+        /// <summary>
+        /// 同时移除自动识别和使用默认语言。
+        /// </summary>
         RemoveAutoAndDefault = RemoveAuto | RemoveDefault
     }
 }

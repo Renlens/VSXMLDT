@@ -1,4 +1,5 @@
 ﻿using System;
+using System.ComponentModel;
 using System.IO;
 using System.Net;
 using System.Text;
@@ -38,11 +39,11 @@ namespace Renlen.FileTranslator
                 {
                     TransferProtocolType.Http => HTTP,
                     TransferProtocolType.Https => HTTPS,
-                    _ => throw new ArgumentException("无效的传输协议类型", nameof(value)),
+                    _ => throw new InvalidEnumArgumentException(nameof(value), (int)value, typeof(TransferProtocolType))
                 };
                 transferProtocol = value;
             }
-        } 
+        }
 
         /// <summary>
         /// 实现类型的名称
@@ -67,14 +68,13 @@ namespace Renlen.FileTranslator
             string r;
             string salt = Random.Next().ToString();
 
-            string get = string.Format(
-            "?q={0}&from={1}&to={2}&appid={3}&salt={4}&sign={5}"
-            , Uri.EscapeDataString(str)
-            , sourceLanguage.Value
-            , targetLanguage.Value
-            , user.AppID
-            , salt
-            , $"{user.AppID}{str}{salt}{user.SecretKey}".GetMD5());
+            string get = string.Format("?q={0}&from={1}&to={2}&appid={3}&salt={4}&sign={5}",
+                                       Uri.EscapeDataString(str),
+                                       sourceLanguage.Value,
+                                       targetLanguage.Value,
+                                       user.AppID,
+                                       salt,
+                                       $"{user.AppID}{str}{salt}{user.SecretKey}".GetMD5());
 
             HttpWebRequest web = (HttpWebRequest)WebRequest.Create($"{uri}{get}");
 

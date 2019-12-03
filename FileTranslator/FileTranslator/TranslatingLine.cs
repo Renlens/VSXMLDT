@@ -3,6 +3,7 @@
     public class TranslatingLine : ITranslatingLine
     {
         public string Text { get; protected set; }
+        public ResultCode Code { get; set; }
         public string Result { get; set; }
 
         protected TranslatingLine()

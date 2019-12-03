@@ -8,11 +8,11 @@ namespace Renlen.FileTranslator
     {
         private partial class XmlFileOfVSLine : ITranslatingLine, ITranslatingLineReadWrite
         {
-            private readonly XmlNode node;
+            private readonly string hash;
+            private readonly string memberName;
+            private readonly string path;
+            private readonly int index;
             private readonly LineType type;
-            private readonly long index;
-            private readonly int count;
-            private readonly long parentIndex;
             public ResultCode Code { get; set; }
             public string Text { get; set; }
             private string result;
@@ -30,17 +30,13 @@ namespace Renlen.FileTranslator
                         finalResult = "";
                         return finalResult;
                     }
-                    switch (type)
+                    if (type == LineType.Text)
                     {
-                        case LineType.Text:
-                            finalResult = result;
-                            break;
-                        case LineType.SingleElement:
-                            break;
-                        case LineType.Multielement:
-                            break;
-                        default:
-                            break;
+                        finalResult = result;
+                    }
+                    else if (type == LineType.Element)
+                    {
+
                     }
                     return finalResult;
                 }
@@ -49,20 +45,14 @@ namespace Renlen.FileTranslator
                     result = value;
                 }
             }
-            public XmlFileOfVSLine(XmlNode node, long index, int count = -1, long parentIndex = -1)
+            public XmlFileOfVSLine(string text, string hash, string memberName, string path, int index, LineType type)
             {
-                this.node = node;
-                this.type = (parentIndex == -1 && count == -1) ?
-                    LineType.Text :
-                    parentIndex == -1 ?
-                    LineType.Link :
-                    LineType.Multielement;
+                this.Text = text;
+                this.hash = hash;
+                this.memberName = memberName;
+                this.path = path;
                 this.index = index;
-                this.count = count;
-                this.node = node;
-                this.parentIndex = parentIndex;
-
-
+                this.type = type;
             }
 
             public void CommitResult()
