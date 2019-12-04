@@ -11,37 +11,25 @@ namespace Renlen.FileTranslator
     public partial class XmlFileOfVS : IWillTranslateFile, IWillTranslateFileReadWrite
     {
         private static readonly ReadWriter readWriter = new ReadWriter();
-        private static readonly ConcurrentDictionary<string, XmlFileOfVS> dic =
-            new ConcurrentDictionary<string, XmlFileOfVS>();
-        private string hash;
-        //private int var = 0;
+
         private FileSize fileSize = FileSize.Uninit;
         internal readonly XmlDocument xml = new XmlDocument();
 
-        public string Hash
-        {
-            get
-            {
-                if (string.IsNullOrWhiteSpace(hash))
-                {
-                    if (string.IsNullOrWhiteSpace(FullPath))
-                    {
-                        using MemoryStream xmlStream = new MemoryStream();
-                        xml.Save(xmlStream);
-                        xmlStream.Seek(0, SeekOrigin.Begin);
-                        hash = xmlStream.GetMD5();
-                    }
-                    else
-                    {
-                        hash = FullPath.ToLower(CultureInfo.InvariantCulture).GetMD5();
-                    }
-                }
-                return hash;
-            }
-        }
+        /// <summary>
+        /// 获取指示此文件是否可以保存，下次继续翻译的值。始终为 True 。
+        /// </summary>
         public bool IsPause => true;
+        /// <summary>
+        /// 获取指示此文件是否必须按固定顺序提交翻译结果的值。始终为 False 。
+        /// </summary>
         public bool IsContinuous => false;
+        /// <summary>
+        /// 获取指示此文件的源是否是一个磁盘中的文件的值。
+        /// </summary>
         public bool IsFile { get; private set; }
+        /// <summary>
+        /// 如果此文件是一个硬盘的文件，则此属性返回文件全路径。
+        /// </summary>
         public string FullPath { get; private set; }
 
         /// <summary>
@@ -49,7 +37,6 @@ namespace Renlen.FileTranslator
         /// </summary>
         private XmlFileOfVS()
         {
-            hash = null;
             fileSize = FileSize.Uninit;
             IsFile = false;
             FullPath = "";
@@ -67,7 +54,6 @@ namespace Renlen.FileTranslator
             fileSize = (FileSize)stream.Length;
             //Load(stream);
         }
-
         /// <summary>
         /// 从指定的流的当前位置加载一个 <see cref="XmlFileOfVS"/> 对象。
         /// </summary>
@@ -75,16 +61,8 @@ namespace Renlen.FileTranslator
         private XmlFileOfVS(Stream stream)
         {
             Load(stream);
-            Commit(true);
         }
 
-        private void Commit(bool update = true)
-        {
-            if (!dic.TryAdd(Hash, this) && update)
-            {
-                dic[Hash] = this;
-            }
-        }
         /// <summary>
         /// 从指定的流的当前位置加载数据。
         /// </summary>
@@ -94,7 +72,7 @@ namespace Renlen.FileTranslator
             using BinaryReader br = new BinaryReader(stream, Encoding.UTF8, true);
             FullPath = br.ReadString();
             IsFile = !string.IsNullOrWhiteSpace(FullPath);
-            hash = br.ReadString();
+            fileSize = (FileSize)br.ReadInt64();
             int length = br.ReadInt32();
             if (length == 0)
             {
@@ -108,12 +86,28 @@ namespace Renlen.FileTranslator
                 xml.Load(xmlStream);
                 fileSize = (FileSize)stream.Length;
             }
+            bool isnull = br.ReadBoolean();
+            if (isnull)
+            {
+                lines = null;
+            }
+            else
+            {
+                length = br.ReadInt32();
+                lines = new List<ITranslatingLine>(length);
+                IReadWriter<ITranslatingLine> readWriter = XmlFileOfVSLine.LineReadWriter;
+                for (int i = 0; i < length; i++)
+                {
+                    lines.Add(readWriter.Read(stream));
+                }
+            }
         }
         private void Save(Stream stream)
         {
             using BinaryWriter bw = new BinaryWriter(stream, Encoding.UTF8, true);
             bw.Write(FullPath ?? "");
-            bw.Write(Hash);
+            bw.Write((long)fileSize);
+            //保存xml文件
             bw.Write(0);
             long start = stream.Position;
             xml.Save(stream);
@@ -124,6 +118,17 @@ namespace Renlen.FileTranslator
                 stream.Position = start - 4;
                 bw.Write(length);
                 stream.Position = end;
+            }
+            bool isnull = lines == null;
+            bw.Write(isnull);
+            if (!isnull)
+            {
+                bw.Write(lines.Count);
+                IReadWriter<ITranslatingLine> readWriter = XmlFileOfVSLine.LineReadWriter;
+                foreach (ITranslatingLine line in lines)
+                {
+                    readWriter.Write(stream, line);
+                }
             }
             bw.Flush();
         }
@@ -136,6 +141,8 @@ namespace Renlen.FileTranslator
         {
             return (long)fileSize;
         }
+
+        private List<ITranslatingLine> lines;
 
         /// <summary>
         /// test <see cref="GetTranslatingLines"/> test2
@@ -150,7 +157,16 @@ namespace Renlen.FileTranslator
         /// <returns></returns>
         public IEnumerable<ITranslatingLine> GetTranslatingLines()
         {
+            if (lines != null)
+            {
+                foreach (ITranslatingLine line in lines)
+                {
+                    yield return line;
+                }
+                yield break;
+            }
             XmlNodeList members = xml.GetElementsByTagName("member");
+            lines = new List<ITranslatingLine>(Math.Max(4, members.Count));
             foreach (XmlNode member in members)
             {
                 string memberName = GetMemberName(member);
@@ -162,10 +178,12 @@ namespace Renlen.FileTranslator
                 {
                     foreach (ITranslatingLine line in Analysis(node, memberName, node.Name))
                     {
+                        lines.Add(line);
                         yield return line;
                     }
                 }
             }
+            lines.TrimExcess();
         }
 
         /// <summary>
@@ -191,7 +209,7 @@ namespace Renlen.FileTranslator
                 XmlNode line = node.FirstChild;
                 if (line.NodeType == XmlNodeType.Text)
                 {
-                    yield return new XmlFileOfVSLine(line.Value, Hash, memberName, path, 0, LineType.Text);
+                    yield return new XmlFileOfVSLine(this, line.Value, memberName, path, 0, LineType.Text);
                 }
                 else if (Enum.TryParse(line.Name, out ElementType type))
                 {
@@ -236,7 +254,7 @@ namespace Renlen.FileTranslator
                         {
                             if (check)
                             {
-                                yield return new XmlFileOfVSLine(textBuilder.ToString(), Hash, memberName, path, index++, LineType.Element);
+                                yield return new XmlFileOfVSLine(this, textBuilder.ToString(), memberName, path, index++, LineType.Element);
                             }
                             textBuilder.Clear();
                             check = false;
@@ -245,7 +263,7 @@ namespace Renlen.FileTranslator
                         {
                             if (check)
                             {
-                                yield return new XmlFileOfVSLine(textBuilder.ToString(), Hash, memberName, path, index++, LineType.Element);
+                                yield return new XmlFileOfVSLine(this, textBuilder.ToString(), memberName, path, index++, LineType.Element);
                             }
                             textBuilder.Clear();
                             check = false;

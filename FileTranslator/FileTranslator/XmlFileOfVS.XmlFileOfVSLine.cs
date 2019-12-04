@@ -6,15 +6,17 @@ namespace Renlen.FileTranslator
 
     public partial class XmlFileOfVS
     {
-        private partial class XmlFileOfVSLine : ITranslatingLine, ITranslatingLineReadWrite
+        private partial class XmlFileOfVSLine : ITranslatingLine, IReadWrite<ITranslatingLine>
         {
-            private readonly string hash;
+            public static IReadWriter<ITranslatingLine> LineReadWriter { get; } = new ReadWriter();
+
+            public XmlFileOfVS File { get; internal set; }
             private readonly string memberName;
             private readonly string path;
             private readonly int index;
             private readonly LineType type;
             public ResultCode Code { get; set; }
-            public string Text { get; set; }
+            public string Text { get; }
             private string result;
             private string finalResult;
             public string Result
@@ -45,10 +47,11 @@ namespace Renlen.FileTranslator
                     result = value;
                 }
             }
-            public XmlFileOfVSLine(string text, string hash, string memberName, string path, int index, LineType type)
+
+            public XmlFileOfVSLine(XmlFileOfVS file, string text, string memberName, string path, int index, LineType type)
             {
+                this.File = file;
                 this.Text = text;
-                this.hash = hash;
                 this.memberName = memberName;
                 this.path = path;
                 this.index = index;

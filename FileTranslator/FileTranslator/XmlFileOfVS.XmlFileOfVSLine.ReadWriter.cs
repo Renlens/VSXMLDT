@@ -6,8 +6,6 @@ namespace Renlen.FileTranslator
 
     public partial class XmlFileOfVS
     {
-
-
         private partial class XmlFileOfVSLine
         {
             private class ReadWriter : IReadWriter<ITranslatingLine>
