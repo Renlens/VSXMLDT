@@ -1,4 +1,5 @@
-﻿namespace Renlen.FileTranslator
+﻿#if DEV
+namespace Renlen.FileTranslator
 {
     partial class FormMain
     {
@@ -186,7 +187,7 @@
             this.upEditSourceLanguage.DisplayMember = "This";
             this.upEditSourceLanguage.Name = "upEditSourceLanguage";
             this.upEditSourceLanguage.NullText = "Null";
-            this.upEditSourceLanguage.PopupView = this.viewUpEditLanguage;
+            this.upEditSourceLanguage.View = this.viewUpEditLanguage;
             this.upEditSourceLanguage.ValueMember = "This";
             // 
             // viewUpEditLanguage
@@ -214,7 +215,7 @@
             new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
             this.upEditTargetLanguage.Name = "upEditTargetLanguage";
             this.upEditTargetLanguage.NullText = "Null";
-            this.upEditTargetLanguage.PopupView = this.viewUpEditLanguage;
+            this.upEditTargetLanguage.View = this.viewUpEditLanguage;
             // 
             // colOutput
             // 
@@ -234,7 +235,7 @@
             new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
             this.upEditOutput.Name = "upEditOutput";
             this.upEditOutput.NullText = "Null";
-            this.upEditOutput.PopupView = this.viewUpEditOutput;
+            this.upEditOutput.View = this.viewUpEditOutput;
             // 
             // viewUpEditOutput
             // 
@@ -332,7 +333,7 @@
             this.barDockControlTop.CausesValidation = false;
             this.barDockControlTop.Dock = System.Windows.Forms.DockStyle.Top;
             this.barDockControlTop.Location = new System.Drawing.Point(0, 0);
-            this.barDockControlTop.Manager = this.barManager1;
+            //this.barDockControlTop.Manager = this.barManager1;
             this.barDockControlTop.Size = new System.Drawing.Size(1495, 0);
             // 
             // barDockControlBottom
@@ -340,7 +341,7 @@
             this.barDockControlBottom.CausesValidation = false;
             this.barDockControlBottom.Dock = System.Windows.Forms.DockStyle.Bottom;
             this.barDockControlBottom.Location = new System.Drawing.Point(0, 688);
-            this.barDockControlBottom.Manager = this.barManager1;
+            //this.barDockControlBottom.Manager = this.barManager1;
             this.barDockControlBottom.Size = new System.Drawing.Size(1495, 0);
             // 
             // barDockControlLeft
@@ -348,7 +349,7 @@
             this.barDockControlLeft.CausesValidation = false;
             this.barDockControlLeft.Dock = System.Windows.Forms.DockStyle.Left;
             this.barDockControlLeft.Location = new System.Drawing.Point(0, 0);
-            this.barDockControlLeft.Manager = this.barManager1;
+            //this.barDockControlLeft.Manager = this.barManager1;
             this.barDockControlLeft.Size = new System.Drawing.Size(0, 688);
             // 
             // barDockControlRight
@@ -356,7 +357,7 @@
             this.barDockControlRight.CausesValidation = false;
             this.barDockControlRight.Dock = System.Windows.Forms.DockStyle.Right;
             this.barDockControlRight.Location = new System.Drawing.Point(1495, 0);
-            this.barDockControlRight.Manager = this.barManager1;
+            //this.barDockControlRight.Manager = this.barManager1;
             this.barDockControlRight.Size = new System.Drawing.Size(0, 688);
             // 
             // FormMain
@@ -423,4 +424,4 @@
         private DevExpress.XtraBars.BarDockControl barDockControlRight;
     }
 }
-
+#endif

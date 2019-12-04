@@ -28,7 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle2 = new System.Windows.Forms.DataGridViewCellStyle();
+            System.Windows.Forms.DataGridViewCellStyle dataGridViewCellStyle1 = new System.Windows.Forms.DataGridViewCellStyle();
             this.gridView1 = new System.Windows.Forms.DataGridView();
             this.colName = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colFileSize = new System.Windows.Forms.DataGridViewTextBoxColumn();
@@ -39,6 +39,7 @@
             this.colOutput = new System.Windows.Forms.DataGridViewComboBoxColumn();
             this.colProgress = new System.Windows.Forms.DataGridViewTextBoxColumn();
             this.colState = new System.Windows.Forms.DataGridViewTextBoxColumn();
+            this.button1 = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.gridView1)).BeginInit();
             this.SuspendLayout();
             // 
@@ -48,8 +49,8 @@
             this.gridView1.AllowUserToDeleteRows = false;
             this.gridView1.AllowUserToOrderColumns = true;
             this.gridView1.AllowUserToResizeRows = false;
-            this.gridView1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
-            | System.Windows.Forms.AnchorStyles.Left)
+            this.gridView1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.gridView1.AutoSizeColumnsMode = System.Windows.Forms.DataGridViewAutoSizeColumnsMode.Fill;
             this.gridView1.BackgroundColor = System.Drawing.SystemColors.Control;
@@ -68,14 +69,15 @@
             this.gridView1.Name = "gridView1";
             this.gridView1.Size = new System.Drawing.Size(1100, 494);
             this.gridView1.TabIndex = 0;
-            this.gridView1.MouseClick += new System.Windows.Forms.MouseEventHandler(this.gridControl1_MouseClick);
+            this.gridView1.CellFormatting += new System.Windows.Forms.DataGridViewCellFormattingEventHandler(this.GridView1_CellFormatting);
+            this.gridView1.MouseClick += new System.Windows.Forms.MouseEventHandler(this.GridView1_MouseClick);
             // 
             // colName
             // 
             this.colName.AutoSizeMode = System.Windows.Forms.DataGridViewAutoSizeColumnMode.None;
             this.colName.DataPropertyName = "Name";
-            dataGridViewCellStyle2.NullValue = null;
-            this.colName.DefaultCellStyle = dataGridViewCellStyle2;
+            dataGridViewCellStyle1.NullValue = null;
+            this.colName.DefaultCellStyle = dataGridViewCellStyle1;
             this.colName.FillWeight = 150F;
             this.colName.HeaderText = "File Name";
             this.colName.MinimumWidth = 50;
@@ -141,13 +143,24 @@
             this.colState.HeaderText = "State";
             this.colState.Name = "colState";
             // 
-            // FormMain
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(303, 7);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(75, 23);
+            this.button1.TabIndex = 1;
+            this.button1.Text = "button1";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.button1_Click);
+            // 
+            // FormMain2
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1121, 550);
+            this.Controls.Add(this.button1);
             this.Controls.Add(this.gridView1);
-            this.Name = "FormMain";
+            this.Name = "FormMain2";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "File Translator";
             this.Load += new System.EventHandler(this.Form1_Load);
@@ -168,6 +181,7 @@
         private System.Windows.Forms.DataGridViewComboBoxColumn colOutput;
         private System.Windows.Forms.DataGridViewTextBoxColumn colProgress;
         private System.Windows.Forms.DataGridViewTextBoxColumn colState;
+        private System.Windows.Forms.Button button1;
     }
 }
 

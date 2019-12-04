@@ -19,7 +19,11 @@ namespace Renlen.FileTranslator
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
+#if DEV
             Application.Run(new FormMain());
+#else
+            Application.Run(new FormMain2());
+#endif
         }
     }
 }

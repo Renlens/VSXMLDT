@@ -1,4 +1,5 @@
-﻿using DevExpress.Utils;
+﻿#if DEV
+using DevExpress.Utils;
 using DevExpress.XtraGrid.Columns;
 using System;
 using System.Collections.Generic;
@@ -32,7 +33,7 @@ namespace Renlen.FileTranslator
             // 设置 viewUpEditLanguage 的列
             //
 
-            #region 定义列
+#region 定义列
             GridColumn colLanguageValue = new GridColumn
             {
                 FieldName = "Value",
@@ -51,7 +52,7 @@ namespace Renlen.FileTranslator
                 Caption = "Caption",
                 VisibleIndex = 2
             };
-            #endregion
+#endregion
 
             viewUpEditLanguage.Columns.AddRange(new GridColumn[]
             {
@@ -72,7 +73,7 @@ namespace Renlen.FileTranslator
         }
         private void LoadFiles()
         {
-            Files.AddRange(TestFile.CreateTestFiles(0).Select(file => new TranslatingFile(file)));
+            Files.AddRange(TestFile.CreateTestFiles(1000).Select(file => new TranslatingFile(file)));
         }
         private void RefreshFiles()
         {
@@ -138,3 +139,4 @@ namespace Renlen.FileTranslator
         }
     }
 }
+#endif

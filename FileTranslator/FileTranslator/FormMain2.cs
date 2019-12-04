@@ -6,10 +6,13 @@ using System.Diagnostics;
 using System.Drawing;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Xml.Linq;
 using static Renlen.FileTranslator.Global;
+using Microsoft.VisualBasic.FileIO;
+using Microsoft.VisualBasic;
 
 namespace Renlen.FileTranslator
 {
@@ -24,7 +27,18 @@ namespace Renlen.FileTranslator
         {
             BindingFiles.DataSource = Files;
             gridView1.DataSource = BindingFiles;
+            colSourceLanguage.DataSource = Language.GetLanguages();
+            colSourceLanguage.DisplayMember = "SourceLanguage";
+            colSourceLanguage.ValueMember = "This";
+            colSourceLanguage.DisplayMember = "Caption";
+            colTargetLanguage.DataSource = Language.GetLanguages(LanguageFiter.RemoveAuto);
+            colTargetLanguage.DisplayMember = "TargetLanguage";
+            colTargetLanguage.ValueMember = "This";
+            colTargetLanguage.DisplayMember = "Caption";
+            colFileSize.DefaultCellStyle.FormatProvider = FileSizeFormatter.Formatter;
+            colFileSize.DefaultCellStyle.Format = "S5";
         }
+
         private void GetConfig()
         {
 
@@ -76,12 +90,30 @@ namespace Renlen.FileTranslator
             Files.Add(file);
         }
 
-        private void gridControl1_MouseClick(object sender, MouseEventArgs e)
+        private void GridView1_MouseClick(object sender, MouseEventArgs e)
         {
             if (e.Button == MouseButtons.Right)
             {
 
             }
+        }
+
+        private void GridView1_CellFormatting(object sender, DataGridViewCellFormattingEventArgs e)
+        {
+            if (!e.FormattingApplied && e.CellStyle.FormatProvider is IFormatProvider provider)
+            {
+                object result = provider.GetFormat(typeof(ICustomFormatter));
+                if (result != null && result is ICustomFormatter formatter)
+                {
+                    e.Value = formatter.Format(e.CellStyle.Format, e.Value, provider);
+                    e.FormattingApplied = true;
+                }
+            }
+        }
+
+        private void button1_Click(object sender, EventArgs e)
+        {
+            
         }
     }
 }
