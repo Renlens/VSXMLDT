@@ -174,9 +174,9 @@ namespace Renlen.FileTranslator
                 {
                     continue;
                 }
-                foreach (XmlNode node in member.ChildNodes)
+                for (int i = 0; i < member.ChildNodes.Count; i++)
                 {
-                    foreach (ITranslatingLine line in Analysis(node, memberName, node.Name))
+                    foreach (ITranslatingLine line in Analysis(member.ChildNodes[i], memberName, i.ToString()))
                     {
                         lines.Add(line);
                         yield return line;
@@ -201,11 +201,6 @@ namespace Renlen.FileTranslator
             }
             else if (node.ChildNodes.Count == 1)
             {
-                string name = GetMemberName(node.ParentNode);
-                if (name == null)
-                {
-                    yield break;
-                }
                 XmlNode line = node.FirstChild;
                 if (line.NodeType == XmlNodeType.Text)
                 {
