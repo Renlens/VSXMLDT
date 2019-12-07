@@ -28,7 +28,7 @@ namespace Renlen.FileTranslator
         /// </summary>
         public bool IsFile { get; private set; }
         /// <summary>
-        /// 如果此文件是一个硬盘的文件，则此属性返回文件全路径。
+        /// 如果此文件是一个硬盘的文件，则此属性返回文件全路径。否则，返回文件的标识名，以路径相同的形式。
         /// </summary>
         public string FullPath { get; private set; }
 
@@ -51,6 +51,29 @@ namespace Renlen.FileTranslator
             FullPath = Path.GetFullPath(file);
             using FileStream stream = new FileStream(FullPath, FileMode.OpenOrCreate, FileAccess.Read);
             xml.Load(stream);
+            fileSize = (FileSize)stream.Length;
+            //Load(stream);
+        }
+        /// <summary>
+        /// 使用指定的 XML 文件初始化一个 <see cref="XmlFileOfVS"/> 对象。
+        /// </summary>
+        /// <param name="file"></param>
+        /// <param name="path"></param>
+        /// <param name="isFile"></param>
+        public XmlFileOfVS(XmlDocument file, string path, bool isFile = false)
+        {
+            IsFile = isFile;
+            if (IsFile)
+            {
+                FullPath = Path.GetFullPath(path);
+            }
+            else
+            {
+                FullPath = path;
+            }
+            xml = file;
+            using MemoryStream stream = new MemoryStream();
+            xml.Save(stream);
             fileSize = (FileSize)stream.Length;
             //Load(stream);
         }
@@ -137,9 +160,9 @@ namespace Renlen.FileTranslator
         /// 获取相关联的 XML 文件的大小
         /// </summary>
         /// <returns></returns>
-        public long GetFileSize()
+        public FileSize GetFileSize()
         {
-            return (long)fileSize;
+            return fileSize;
         }
 
         private List<ITranslatingLine> lines;

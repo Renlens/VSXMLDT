@@ -6,7 +6,7 @@ namespace Renlen.FileTranslator
 
     public partial class XmlFileOfVS
     {
-        private partial class XmlFileOfVSLine : ITranslatingLine, IReadWrite<ITranslatingLine>
+        private partial class XmlFileOfVSLine : ITranslatingLine
         {
             public static IReadWriter<ITranslatingLine> LineReadWriter { get; } = new ReadWriter();
 
@@ -61,12 +61,6 @@ namespace Renlen.FileTranslator
             public void CommitResult()
             {
 
-            }
-
-
-            public IReadWriter<ITranslatingLine> GetReadWriter()
-            {
-                throw new NotImplementedException();
             }
         }
     }

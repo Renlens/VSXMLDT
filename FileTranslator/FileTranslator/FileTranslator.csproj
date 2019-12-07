@@ -123,7 +123,7 @@
     <Compile Include="WillTranslateFile.cs" />
     <Compile Include="XmlFileOfVS.cs" />
     <Compile Include="XmlFileOfVS.ElementType.cs" />
-    <Compile Include="XmlFileOfVS.FileSize.cs" />
+    <Compile Include="FileSize.cs" />
     <Compile Include="XmlFileOfVS.LineType.cs" />
     <Compile Include="XmlFileOfVS.ReadWriter.cs" />
     <Compile Include="XmlFileOfVS.XmlFileOfVSLine.cs" />
@@ -134,6 +134,7 @@
     <EmbeddedResource Include="FormMain.resx">
       <DependentUpon>FormMain.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Properties\licenses.licx" />
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>

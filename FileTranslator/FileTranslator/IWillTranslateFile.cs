@@ -32,6 +32,6 @@ namespace Renlen.FileTranslator
         /// 获取文件大小
         /// </summary>
         /// <returns></returns>
-        long GetFileSize();
+        FileSize GetFileSize();
     }
 }
