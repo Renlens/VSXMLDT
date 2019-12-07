@@ -34,17 +34,11 @@ namespace Renlen.FileTranslator
             //
 
 #region 定义列
-            GridColumn colLanguageValue = new GridColumn
-            {
-                FieldName = "Value",
-                Caption = "Value",
-                VisibleIndex = 0
-            };
             GridColumn colLanguageName = new GridColumn
             {
                 FieldName = "Name",
                 Caption = "Name",
-                VisibleIndex = 1
+                VisibleIndex = 1,
             };
             GridColumn colLanguageCaption = new GridColumn
             {
@@ -56,7 +50,6 @@ namespace Renlen.FileTranslator
 
             viewUpEditLanguage.Columns.AddRange(new GridColumn[]
             {
-                colLanguageValue,
                 colLanguageName,
                 colLanguageCaption
             });
@@ -73,7 +66,7 @@ namespace Renlen.FileTranslator
         }
         private void LoadFiles()
         {
-            Files.AddRange(TestFile.CreateTestFiles(1000).Select(file => new TranslatingFile(file)));
+            Files.AddRange(TestFile.CreateTestFiles(0).Select(file => new TranslatingFile(file)));
         }
         private void RefreshFiles()
         {
@@ -117,7 +110,7 @@ namespace Renlen.FileTranslator
             Files.Add(file);
         }
 
-        private void btnAdd_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
+        private async void btnAdd_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
         {
             OpenFileDialog openFileDialog = new OpenFileDialog()
             {
@@ -127,6 +120,8 @@ namespace Renlen.FileTranslator
             {
                 XmlFileOfVS xml = new XmlFileOfVS(openFileDialog.FileName);
                 Files.Add(new TranslatingFile(xml));
+                await Files.Last().StatisticsAsync();
+                gridControl1.RefreshDataSource();
             }
         }
 
