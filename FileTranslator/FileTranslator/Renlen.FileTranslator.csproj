@@ -35,12 +35,12 @@
     <DebugSymbols>true</DebugSymbols>
     <DebugType>full</DebugType>
     <Optimize>false</Optimize>
-    <OutputPath>bin\Debug\</OutputPath>
+    <OutputPath>..\OutPut\</OutputPath>
     <DefineConstants>TRACE;DEBUG;DEV</DefineConstants>
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <LangVersion>8.0</LangVersion>
-    <DocumentationFile>bin\Debug\Renlen.FileTranslator.xml</DocumentationFile>
+    <DocumentationFile>..\OutPut\Renlen.FileTranslator.xml</DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <PlatformTarget>AnyCPU</PlatformTarget>
@@ -110,11 +110,6 @@
       <DependentUpon>FormMain.cs</DependentUpon>
     </Compile>
     <Compile Include="Global.cs" />
-    <Compile Include="IReadWrite.cs" />
-    <Compile Include="IReadWriter.cs" />
-    <Compile Include="ITranslatingLine.cs" />
-    <Compile Include="IWillTranslateFile.cs" />
-    <Compile Include="IWillTranslateFileReadWrite.cs" />
     <Compile Include="Language.cs" />
     <Compile Include="LanguageCaptionAttribute.cs" />
     <Compile Include="LanguageValue.cs" />
@@ -128,20 +123,12 @@
     <Compile Include="TranslatingFile.cs" />
     <Compile Include="TranslatingLine.cs" />
     <Compile Include="WillTranslateFile.cs" />
-    <Compile Include="XmlFileOfVS.cs" />
-    <Compile Include="XmlFileOfVS.ElementType.cs" />
-    <Compile Include="FileSize.cs" />
-    <Compile Include="XmlFileOfVS.LineType.cs" />
-    <Compile Include="XmlFileOfVS.ReadWriter.cs" />
-    <Compile Include="XmlFileOfVS.XmlFileOfVSLine.cs" />
-    <Compile Include="XmlFileOfVS.XmlFileOfVSLine.ReadWriter.cs" />
     <EmbeddedResource Include="FormMain2.resx">
       <DependentUpon>FormMain2.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FormMain.resx">
       <DependentUpon>FormMain.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Properties\licenses.licx" />
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
@@ -176,6 +163,12 @@
       <ProductName>.NET Framework 3.5 SP1</ProductName>
       <Install>false</Install>
     </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <ProjectReference Include="..\Renlen.IWillTranslateFile\Renlen.TranslateFile.csproj">
+      <Project>{484aaa99-7478-4cbb-9349-bb8b5d2ac2b0}</Project>
+      <Name>Renlen.TranslateFile</Name>
+    </ProjectReference>
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

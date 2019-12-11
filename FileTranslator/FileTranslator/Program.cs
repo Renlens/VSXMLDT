@@ -19,6 +19,12 @@ namespace Renlen.FileTranslator
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
+
+            Global.LoadFileTypes("FileType", out string msg);
+            if (!string.IsNullOrWhiteSpace(msg))
+            {
+                MessageBox.Show(msg);
+            }
 #if DEV
             Application.Run(new FormMain());
 #else

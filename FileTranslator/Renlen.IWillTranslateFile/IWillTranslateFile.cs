@@ -1,9 +1,11 @@
 ﻿using System.Collections.Generic;
+using System.IO;
+using System.Linq.Expressions;
 
-namespace Renlen.FileTranslator
+namespace Renlen.TranslateFile
 {
     /// <summary>
-    /// 表示一个将要翻译的文件。
+    /// 表示一个将要翻译的文件。此类必须有公有无参数构造函数用来辅助创建实例。
     /// </summary>
     public interface IWillTranslateFile
     {
@@ -20,9 +22,29 @@ namespace Renlen.FileTranslator
         /// </summary>
         bool IsFile { get; }
         /// <summary>
-        /// 如果此文件是一个硬盘的文件，则此属性返回文件全路径。
+        /// 如果此文件是一个硬盘的文件，则此属性返回文件全路径。否则，应返回文件的标识，以路径的格式。
         /// </summary>
         string FullPath { get; }
+        /// <summary>
+        /// 表示此类可以从文件创建
+        /// </summary>
+        bool IsFromFile { get; }
+        /// <summary>
+        /// 表示此类可以从流创建
+        /// </summary>
+        bool IsFromStream { get; }
+        /// <summary>
+        /// 从文件创建一个实例
+        /// </summary>
+        /// <param name="path"></param>
+        /// <returns></returns>
+        IWillTranslateFile FromFile(string path);
+        /// <summary>
+        /// 从流创建一个实例
+        /// </summary>
+        /// <param name="stream"></param>
+        /// <returns></returns>
+        IWillTranslateFile FromStream(Stream stream);
         /// <summary>
         /// 获取此文件要翻译的所有行。
         /// </summary>

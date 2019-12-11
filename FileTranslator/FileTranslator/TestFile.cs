@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using Renlen.TranslateFile;
 using static Renlen.FileTranslator.Global;
 
 namespace Renlen.FileTranslator

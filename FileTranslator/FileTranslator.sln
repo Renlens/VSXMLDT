@@ -3,7 +3,11 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 16
 VisualStudioVersion = 16.0.29418.71
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "FileTranslator", "FileTranslator\FileTranslator.csproj", "{8F7DD744-42AB-4B7B-B73B-F4B106562B00}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Renlen.FileTranslator", "FileTranslator\Renlen.FileTranslator.csproj", "{8F7DD744-42AB-4B7B-B73B-F4B106562B00}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Renlen.TranslateFile", "Renlen.IWillTranslateFile\Renlen.TranslateFile.csproj", "{484AAA99-7478-4CBB-9349-BB8B5D2AC2B0}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Renlen.XmlFileOfVS", "Renlen.XmlFileOfVS_1.0\Renlen.XmlFileOfVS.csproj", "{20C077E6-9F45-4A54-AFB8-7812AC8361F8}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -15,6 +19,14 @@ Global
 		{8F7DD744-42AB-4B7B-B73B-F4B106562B00}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{8F7DD744-42AB-4B7B-B73B-F4B106562B00}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{8F7DD744-42AB-4B7B-B73B-F4B106562B00}.Release|Any CPU.Build.0 = Release|Any CPU
+		{484AAA99-7478-4CBB-9349-BB8B5D2AC2B0}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{484AAA99-7478-4CBB-9349-BB8B5D2AC2B0}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{484AAA99-7478-4CBB-9349-BB8B5D2AC2B0}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{484AAA99-7478-4CBB-9349-BB8B5D2AC2B0}.Release|Any CPU.Build.0 = Release|Any CPU
+		{20C077E6-9F45-4A54-AFB8-7812AC8361F8}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{20C077E6-9F45-4A54-AFB8-7812AC8361F8}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{20C077E6-9F45-4A54-AFB8-7812AC8361F8}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{20C077E6-9F45-4A54-AFB8-7812AC8361F8}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

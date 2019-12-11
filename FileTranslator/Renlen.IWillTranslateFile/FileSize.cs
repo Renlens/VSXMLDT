@@ -1,4 +1,4 @@
-﻿namespace Renlen.FileTranslator
+﻿namespace Renlen.TranslateFile
 {
     /// <summary>
     /// 文件特殊大小的枚举。支持 <see langword="long"/> 类型的大小。

@@ -1,6 +1,6 @@
 ﻿using System.IO;
 
-namespace Renlen.FileTranslator
+namespace Renlen.TranslateFile
 {
     /// <summary>
     /// 指定类型读写到指定流的读写器实现

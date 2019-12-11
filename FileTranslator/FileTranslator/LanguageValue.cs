@@ -1,7 +1,7 @@
 ﻿namespace Renlen.FileTranslator
 {
     /// <summary>
-    /// 支持翻译的语言列表，目标语言不可使用 <see cref="Language.auto"/> .
+    /// 支持翻译的语言列表，目标语言不可使用 <see cref="LanguageValue.auto"/> .
     /// </summary>
     public enum LanguageValue
     {
@@ -122,4 +122,18 @@
         /// </summary>
         vie
     }
+
+
+
+
+    /// <summary>题 1
+    /// <para />
+    /// (不定项选择题) <see cref="object.GetType"/> 不可能返回以下哪种类型的 <see cref="System.Type"/> ?
+    /// <para /> A. <see cref="System.Type"/>
+    /// <para /> B. <see cref="System.Enum"/>
+    /// <para /> C. <see cref="System.Func{T, TResult}"/>
+    /// <para /> D. <see cref="System.AppDomain.AssemblyLoad"/> (事件)
+    /// <para /> E. <see cref="System.IDisposable"/>
+    /// </summary>
+    public class a { }
 }

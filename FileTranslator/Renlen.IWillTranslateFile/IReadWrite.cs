@@ -1,4 +1,4 @@
-﻿namespace Renlen.FileTranslator
+﻿namespace Renlen.TranslateFile
 {
     /// <summary>
     /// 读写接口，表示此类支持到流的自定义读写

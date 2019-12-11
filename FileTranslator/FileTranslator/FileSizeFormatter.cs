@@ -100,7 +100,7 @@ namespace Renlen.FileTranslator
             // Provide default formatting if arg is not an number.
             else
             {
-                return Other();
+                return arg.ToString();
             }
 
             string Other()

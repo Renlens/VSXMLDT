@@ -1,4 +1,4 @@
-﻿namespace Renlen.FileTranslator
+﻿namespace Renlen.TranslateFile
 {
     /// <summary>
     /// 表示翻译文件的一次翻译对象
@@ -12,7 +12,7 @@
         /// <summary>
         /// 结果代码
         /// </summary>
-        ResultCode Code { get; set; }
+        int Code { get; set; }
         /// <summary>
         /// 翻译结果。
         /// </summary>

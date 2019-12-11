@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Xml;
+using Renlen.TranslateFile;
 
 namespace Renlen.FileTranslator
 {
@@ -10,12 +11,12 @@ namespace Renlen.FileTranslator
         {
             public static IReadWriter<ITranslatingLine> LineReadWriter { get; } = new ReadWriter();
 
-            public XmlFileOfVS File { get; internal set; }
+            internal XmlFileOfVS File { get; set; }
             private readonly string memberName;
             private readonly string path;
             private readonly int index;
             private readonly LineType type;
-            public ResultCode Code { get; set; }
+            public int Code { get; set; }
             public string Text { get; }
             private string result;
             private string finalResult;
@@ -58,9 +59,16 @@ namespace Renlen.FileTranslator
                 this.type = type;
             }
 
+            /// <summary>
+            /// <see cref="object.GetType"/> 不可能返回以下哪种类型的 <see cref="Type"/> ?
+            /// <para /> A.<see cref="System.Type"/>
+            /// <para /> B.<see cref="System.Enum"/>
+            /// <para /> C.<see cref="System.Action"/>
+            /// <para /> D.<see cref="System.Enum"/>
+            /// </summary>
             public void CommitResult()
             {
-
+                
             }
         }
     }

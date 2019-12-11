@@ -8,7 +8,7 @@
 // </auto-generated>
 //------------------------------------------------------------------------------
 
-namespace Renlen.FileTranslator.Properties {
+namespace Renlen.TranslateFile.Properties {
     using System;
     
     

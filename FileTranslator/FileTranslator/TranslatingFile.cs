@@ -1,6 +1,7 @@
 ﻿using System.Collections.Concurrent;
 using System.IO;
 using System.Threading.Tasks;
+using Renlen.TranslateFile;
 
 namespace Renlen.FileTranslator
 {

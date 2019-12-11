@@ -5,6 +5,7 @@ using System.Globalization;
 using System.IO;
 using System.Text;
 using System.Xml;
+using Renlen.TranslateFile;
 
 namespace Renlen.FileTranslator
 {
@@ -31,11 +32,19 @@ namespace Renlen.FileTranslator
         /// 如果此文件是一个硬盘的文件，则此属性返回文件全路径。否则，返回文件的标识名，以路径相同的形式。
         /// </summary>
         public string FullPath { get; private set; }
+        /// <summary>
+        /// 可以从文件创建实例。
+        /// </summary>
+        public bool IsFromFile => true;
+        /// <summary>
+        /// 可以从流创建实例。
+        /// </summary>
+        public bool IsFromStream => true;
 
         /// <summary>
         /// 初始化一个新实例。
         /// </summary>
-        private XmlFileOfVS()
+        public XmlFileOfVS()
         {
             fileSize = FileSize.Uninit;
             IsFile = false;
@@ -92,7 +101,7 @@ namespace Renlen.FileTranslator
         /// <param name="stream"></param>
         private void Load(Stream stream)
         {
-            using BinaryReader br = new BinaryReader(stream, Encoding.UTF8, true);
+            using BinaryReader br = new BinaryReader(stream, Encoding.UTF8/*, true*/);
             FullPath = br.ReadString();
             IsFile = !string.IsNullOrWhiteSpace(FullPath);
             fileSize = (FileSize)br.ReadInt64();
@@ -127,7 +136,7 @@ namespace Renlen.FileTranslator
         }
         private void Save(Stream stream)
         {
-            using BinaryWriter bw = new BinaryWriter(stream, Encoding.UTF8, true);
+            using BinaryWriter bw = new BinaryWriter(stream, Encoding.UTF8/*, true*/);
             bw.Write(FullPath ?? "");
             bw.Write((long)fileSize);
             //保存xml文件
@@ -333,5 +342,26 @@ namespace Renlen.FileTranslator
             return readWriter;
         }
 
+        /// <summary>
+        /// 从一个 XML 文件创建实例
+        /// </summary>
+        /// <param name="path"></param>
+        /// <returns></returns>
+        public IWillTranslateFile FromFile(string path)
+        {
+            return new XmlFileOfVS(path);
+        }
+
+        /// <summary>
+        /// 从一个 XML 流创建实例
+        /// </summary>
+        /// <param name="stream"></param>
+        /// <returns></returns>
+        public IWillTranslateFile FromStream(Stream stream)
+        {
+            XmlDocument xml = new XmlDocument();
+            xml.Load(stream);
+            return new XmlFileOfVS(xml, "未命名", false);
+        }
     }
 }
