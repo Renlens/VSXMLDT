@@ -1,11 +1,11 @@
 ﻿using System;
+using System.Collections;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Text;
-using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using Renlen.TranslateFile;
@@ -14,13 +14,13 @@ namespace Renlen.FileTranslator
 {
     internal static class Global
     {
-        private static Type FileInterface { get; } = typeof(IWillTranslateFile);
+        public static Type FileInterface { get; } = typeof(IWillTranslateFile);
         /// <summary>
         /// 全局唯一随机函数（项目内）
         /// </summary>
         public static Random GRandom { get; } = new Random();
 
-        public static List<Type> FileTypes = new List<Type>();
+        public static TypeList FileTypes = new TypeList();
 
         public static bool LoadFileTypes(string path, out string message)
         {
@@ -47,7 +47,7 @@ namespace Renlen.FileTranslator
                         {
                             if (!type.IsInterface && !type.IsAbstract && FileInterface.IsAssignableFrom(type))
                             {
-                                FileTypes.Add(type);
+                                FileTypes.Add(new TypeRef(type));
                             }
                         }
                     }
@@ -71,33 +71,45 @@ namespace Renlen.FileTranslator
         }
     }
 
-    public class TypeRef
+    public class TypeList : IEnumerable<TypeRef>
     {
-        public string Name { get; }
-        public string Caption { get; }
-        public string FullName { get; }
-        public Type Type { get; }
-        public string FileFilter { get; }
+        private List<TypeRef> types = new List<TypeRef>();
 
-        public TypeRef(Type type)
+        public TypeRef this[int index]
         {
-            if (type.IsInterface)
-                throw new ArgumentException("接口类型无效！", nameof(type));
-            if (type.IsAbstract)
-                throw new ArgumentException("抽象类型无效！", nameof(type));
-            if (typeof(IWillTranslateFile).IsAssignableFrom(type))
-                throw new ArgumentException("类型未直接或间接实现 Renlen.IWillTranslateFile 接口。", nameof(type));
-            if (type.GetConstructor(Array.Empty<Type>()) == null) 
-                throw new ArgumentException("未找到此类型的无参数公共构造函数。", nameof(type));
+            get => types[index];
+        }
+        public TypeRef this[string fullName]
+        {
+            get => types.FirstOrDefault(t => t.FullName == fullName);
+        }
 
-            Type = type;
-            FullName = Type.FullName;
+        public void Add(TypeRef type)
+        {
+            if (!Contains(type))
+            {
+                types.Add(type);
+            }
+        }
 
+        public void Remove(TypeRef type)
+        {
+            types.Remove(type);
+        }
 
-            IWillTranslateFile file = (IWillTranslateFile)Type.Assembly.CreateInstance(FullName);
-            Name = string.IsNullOrWhiteSpace(file.Name) ? type.Name : file.Name;
-            FileFilter = file.FileFilter ?? $"{Name}|*.*";
-            Regex.IsMatch(FileFilter, @"^[^\|\r\n]\|(?:[^\|\r\n])+$");
+        public bool Contains(TypeRef type)
+        {
+            return types.Contains(type);
+        }
+
+        public IEnumerator<TypeRef> GetEnumerator()
+        {
+            return types.GetEnumerator();
+        }
+
+        IEnumerator IEnumerable.GetEnumerator()
+        {
+            return GetEnumerator();
         }
     }
 }

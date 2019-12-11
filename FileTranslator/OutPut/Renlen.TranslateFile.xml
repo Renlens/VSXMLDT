@@ -86,14 +86,9 @@
             表示一个将要翻译的文件。此类必须有公有无参数构造函数用来辅助创建实例。
             </summary>
         </member>
-        <member name="P:Renlen.TranslateFile.IWillTranslateFile.IsPause">
+        <member name="P:Renlen.TranslateFile.IWillTranslateFile.About">
             <summary>
-            获取指示此文件是否可以保存，下次继续翻译的值。
-            </summary>
-        </member>
-        <member name="P:Renlen.TranslateFile.IWillTranslateFile.IsContinuous">
-            <summary>
-            获取指示此文件是否必须按固定顺序提交翻译结果的值。
+            获取类本身的相关信息。
             </summary>
         </member>
         <member name="P:Renlen.TranslateFile.IWillTranslateFile.IsFile">
@@ -104,16 +99,6 @@
         <member name="P:Renlen.TranslateFile.IWillTranslateFile.FullPath">
             <summary>
             如果此文件是一个硬盘的文件，则此属性返回文件全路径。否则，应返回文件的标识，以路径的格式。
-            </summary>
-        </member>
-        <member name="P:Renlen.TranslateFile.IWillTranslateFile.IsFromFile">
-            <summary>
-            表示此类可以从文件创建
-            </summary>
-        </member>
-        <member name="P:Renlen.TranslateFile.IWillTranslateFile.IsFromStream">
-            <summary>
-            表示此类可以从流创建
             </summary>
         </member>
         <member name="M:Renlen.TranslateFile.IWillTranslateFile.FromFile(System.String)">
@@ -141,6 +126,54 @@
             获取文件大小
             </summary>
             <returns></returns>
+        </member>
+        <member name="T:Renlen.TranslateFile.FileAbout">
+            <summary>
+            存储与类实例无关只与类本身有关的信息。注意：所有属性均在 <see langword="null"/> 值时才接受赋值。
+            </summary>
+        </member>
+        <member name="P:Renlen.TranslateFile.FileAbout.Name">
+            <summary>
+            对文件的简单描述。
+            <para>例如：Visual Studio 成员注释文档</para>
+            </summary>
+        </member>
+        <member name="P:Renlen.TranslateFile.FileAbout.Caption">
+            <summary>
+            对文件的说明。
+            <para>例如：对 Visual Studio 内程序集内的成员 XML 注释文档的翻译文件。必须遵循 XML 文档规范，否则结果可能有误。</para>
+            </summary>
+        </member>
+        <member name="P:Renlen.TranslateFile.FileAbout.FileFilter">
+            <summary>
+            文件筛选器。用于打开文件对话框中文件的筛选。建议只包含一个 "|" 。虽然在赋值时并不会对其格式进行检查，但有的软件可能会忽略错误的格式。
+            <para>例如：Visual Studio 成员注释文档|*.xml</para>
+            </summary>
+        </member>
+        <member name="P:Renlen.TranslateFile.FileAbout.Auther">
+            <summary>
+            作者。允许包含联系方式等。
+            </summary>
+        </member>
+        <member name="P:Renlen.TranslateFile.FileAbout.IsPause">
+            <summary>
+            获取指示此文件是否可以保存，下次继续翻译的值。
+            </summary>
+        </member>
+        <member name="P:Renlen.TranslateFile.FileAbout.IsContinuous">
+            <summary>
+            获取指示此文件是否必须按固定顺序提交翻译结果的值。
+            </summary>
+        </member>
+        <member name="P:Renlen.TranslateFile.FileAbout.IsFromFile">
+            <summary>
+            表示此类可以从文件创建
+            </summary>
+        </member>
+        <member name="P:Renlen.TranslateFile.FileAbout.IsFromStream">
+            <summary>
+            表示此类可以从流创建
+            </summary>
         </member>
         <member name="T:Renlen.TranslateFile.IWillTranslateFileReadWrite">
             <summary>

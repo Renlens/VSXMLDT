@@ -20,6 +20,17 @@ namespace Renlen.FileTranslator
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
 
+            AppDomain.CurrentDomain.AssemblyResolve += (sender, re) =>
+            {
+                if (re.Name.Contains("Renlen.TranslateFile"))
+                {
+                    return Assembly.LoadFrom(@"Renlen.TranslateFile.dll");
+                }
+                else
+                {
+                    return null;
+                }
+            };
             Global.LoadFileTypes("FileType", out string msg);
             if (!string.IsNullOrWhiteSpace(msg))
             {

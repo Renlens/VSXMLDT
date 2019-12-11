@@ -10,7 +10,7 @@ namespace Renlen.FileTranslator
         public IWillTranslateFile File { get; }
         public bool IsStatisticed { get; private set; }
         public string Name { get; private set; }
-        public FileSize FileSize { get; private set; } = FileSize.Uninit;
+        public long FileSize { get; private set; } = -3;
         public long TextLength { get; private set; } = -3;
         public string DirectoryPath { get; private set; }
         public string FullPath { get; private set; }
@@ -37,9 +37,9 @@ namespace Renlen.FileTranslator
         public void Statistics()
         {
             if (IsStatisticed) return;
-            FileSize = FileSize.Init;// "Loading...";
+            FileSize = -2;// "Loading...";
             TextLength = -2;//"Loading...";
-            FileSize = File.GetFileSize();//.ToShow("S5");
+            FileSize = (long)File.GetFileSize();//.ToShow("S5");
             long textLength = 0;
             foreach (ITranslatingLine line in File.GetTranslatingLines())
             {

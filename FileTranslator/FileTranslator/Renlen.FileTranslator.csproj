@@ -122,6 +122,7 @@
     <Compile Include="TranslateState.cs" />
     <Compile Include="TranslatingFile.cs" />
     <Compile Include="TranslatingLine.cs" />
+    <Compile Include="TypeRef.cs" />
     <Compile Include="WillTranslateFile.cs" />
     <EmbeddedResource Include="FormMain2.resx">
       <DependentUpon>FormMain2.cs</DependentUpon>

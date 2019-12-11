@@ -16,18 +16,20 @@ namespace Renlen.FileTranslator
 
         public bool IsFile { get; protected set; }
 
-        public bool IsFromFile => throw new NotImplementedException();
+        public bool IsFromFile => true;
 
-        public bool IsFromStream => throw new NotImplementedException();
+        public bool IsFromStream => true;
+
+        public FileAbout About => null;
 
         public IWillTranslateFile FromFile(string path)
         {
-            throw new NotImplementedException();
+            return new WillTranslateFile();
         }
 
         public IWillTranslateFile FromStream(Stream stream)
         {
-            throw new NotImplementedException();
+            return new WillTranslateFile();
         }
 
         public virtual long GetFileSize()
@@ -42,7 +44,7 @@ namespace Renlen.FileTranslator
 
         FileSize IWillTranslateFile.GetFileSize()
         {
-            throw new NotImplementedException();
+            return FileSize.NoSize;
         }
     }
 }

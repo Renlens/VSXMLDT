@@ -12,6 +12,17 @@ namespace Renlen.FileTranslator
     public partial class XmlFileOfVS : IWillTranslateFile, IWillTranslateFileReadWrite
     {
         private static readonly ReadWriter readWriter = new ReadWriter();
+        private static readonly FileAbout about = new FileAbout()
+        {
+            Name = "Visual Studio 成员注释文档",
+            Caption = "对 Visual Studio 内程序集内的成员 XML 注释文档的翻译文件。必须遵循 XML 文档规范，否则结果可能有误。",
+            FileFilter = "Visual Studio 成员注释文档|*.xml",
+            Auther = "Renlen",
+            IsFromFile = true,
+            IsFromStream = true,
+            IsPause = true,
+            IsContinuous = false
+        };
 
         private FileSize fileSize = FileSize.Uninit;
         internal readonly XmlDocument xml = new XmlDocument();
@@ -40,6 +51,8 @@ namespace Renlen.FileTranslator
         /// 可以从流创建实例。
         /// </summary>
         public bool IsFromStream => true;
+
+        public FileAbout About => about;
 
         /// <summary>
         /// 初始化一个新实例。
@@ -361,7 +374,7 @@ namespace Renlen.FileTranslator
         {
             XmlDocument xml = new XmlDocument();
             xml.Load(stream);
-            return new XmlFileOfVS(xml, "未命名", false);
+            return new XmlFileOfVS(xml, @"Workspace\未命名", false);
         }
     }
 }

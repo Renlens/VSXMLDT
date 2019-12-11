@@ -1,6 +1,7 @@
 ﻿#if DEV
 using DevExpress.Utils;
 using DevExpress.XtraGrid.Columns;
+using Renlen.TranslateFile;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -33,7 +34,7 @@ namespace Renlen.FileTranslator
             // 设置 viewUpEditLanguage 的列
             //
 
-#region 定义列
+            #region 定义列
             GridColumn colLanguageName = new GridColumn
             {
                 FieldName = "Name",
@@ -46,7 +47,7 @@ namespace Renlen.FileTranslator
                 Caption = "Caption",
                 VisibleIndex = 2
             };
-#endregion
+            #endregion
 
             viewUpEditLanguage.Columns.AddRange(new GridColumn[]
             {
@@ -102,12 +103,6 @@ namespace Renlen.FileTranslator
         private void simpleButton1_Click(object sender, EventArgs e)
         {
             Debug.WriteLine("在此停顿!");
-            XmlFileOfVS xml = new XmlFileOfVS(@"Renlen.FileTranslator.xml");
-            TranslatingFile file = new TranslatingFile(xml);
-            file.Statistics();
-            file.SourceLanguage = Language.English;
-            file.TargetLanguage = Language.Chinese;
-            Files.Add(file);
         }
 
         private async void btnAdd_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
@@ -116,12 +111,23 @@ namespace Renlen.FileTranslator
             {
                 FileName = ""
             };
+            StringBuilder fileFilter = new StringBuilder("所有文件|*.*");
+            foreach (TypeRef type in FileTypes)
+            {
+                fileFilter.Append("|");
+                fileFilter.Append(type.FileFilter);
+            }
+            openFileDialog.Filter = fileFilter.ToString();
             if (openFileDialog.ShowDialog() == DialogResult.OK)
             {
-                XmlFileOfVS xml = new XmlFileOfVS(openFileDialog.FileName);
-                Files.Add(new TranslatingFile(xml));
-                await Files.Last().StatisticsAsync();
-                gridControl1.RefreshDataSource();
+                if (openFileDialog.FilterIndex > 1)
+                {
+                    IWillTranslateFile file = FileTypes[openFileDialog.FilterIndex - 2].Create(openFileDialog.FileName);
+                    Files.Add(new TranslatingFile(file));
+                    gridControl1.RefreshDataSource();
+                    await Files.Last().StatisticsAsync();
+                    gridControl1.RefreshDataSource();
+                }
             }
         }
 

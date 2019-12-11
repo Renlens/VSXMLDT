@@ -82,12 +82,6 @@ namespace Renlen.FileTranslator
         private void simpleButton1_Click(object sender, EventArgs e)
         {
             Debug.WriteLine("在此停顿!");
-            XmlFileOfVS xml = new XmlFileOfVS(@"Renlen.FileTranslator.xml");
-            TranslatingFile file = new TranslatingFile(xml);
-            file.Statistics();
-            file.SourceLanguage = Language.English;
-            file.TargetLanguage = Language.Chinese;
-            Files.Add(file);
         }
 
         private void GridView1_MouseClick(object sender, MouseEventArgs e)
