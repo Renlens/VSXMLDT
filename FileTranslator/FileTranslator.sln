@@ -7,7 +7,7 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Renlen.FileTranslator", "Fi
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Renlen.TranslateFile", "Renlen.IWillTranslateFile\Renlen.TranslateFile.csproj", "{484AAA99-7478-4CBB-9349-BB8B5D2AC2B0}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Renlen.XmlFileOfVS", "Renlen.XmlFileOfVS_1.0\Renlen.XmlFileOfVS.csproj", "{20C077E6-9F45-4A54-AFB8-7812AC8361F8}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Renlen.XmlFileOfVS", "Renlen.XmlFileOfVS\Renlen.XmlFileOfVS.csproj", "{20C077E6-9F45-4A54-AFB8-7812AC8361F8}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

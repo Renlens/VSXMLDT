@@ -5,6 +5,7 @@ using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using Renlen.TranslateFile;
@@ -23,7 +24,6 @@ namespace Renlen.FileTranslator
 
         public static bool LoadFileTypes(string path, out string message)
         {
-            FileTypes.Add(typeof(XmlFileOfVS));
             if (Directory.Exists(path))
             {
                 string[] dllFiles;
@@ -45,7 +45,7 @@ namespace Renlen.FileTranslator
                         dll = Assembly.LoadFrom(file);
                         foreach (Type type in dll.GetTypes())
                         {
-                            if (FileInterface.IsAssignableFrom(type))
+                            if (!type.IsInterface && !type.IsAbstract && FileInterface.IsAssignableFrom(type))
                             {
                                 FileTypes.Add(type);
                             }
@@ -68,6 +68,36 @@ namespace Renlen.FileTranslator
                 message = "加载反射文件列表：指定的路径不存在！";
                 return false;
             }
+        }
+    }
+
+    public class TypeRef
+    {
+        public string Name { get; }
+        public string Caption { get; }
+        public string FullName { get; }
+        public Type Type { get; }
+        public string FileFilter { get; }
+
+        public TypeRef(Type type)
+        {
+            if (type.IsInterface)
+                throw new ArgumentException("接口类型无效！", nameof(type));
+            if (type.IsAbstract)
+                throw new ArgumentException("抽象类型无效！", nameof(type));
+            if (typeof(IWillTranslateFile).IsAssignableFrom(type))
+                throw new ArgumentException("类型未直接或间接实现 Renlen.IWillTranslateFile 接口。", nameof(type));
+            if (type.GetConstructor(Array.Empty<Type>()) == null) 
+                throw new ArgumentException("未找到此类型的无参数公共构造函数。", nameof(type));
+
+            Type = type;
+            FullName = Type.FullName;
+
+
+            IWillTranslateFile file = (IWillTranslateFile)Type.Assembly.CreateInstance(FullName);
+            Name = string.IsNullOrWhiteSpace(file.Name) ? type.Name : file.Name;
+            FileFilter = file.FileFilter ?? $"{Name}|*.*";
+            Regex.IsMatch(FileFilter, @"^[^\|\r\n]\|(?:[^\|\r\n])+$");
         }
     }
 }
