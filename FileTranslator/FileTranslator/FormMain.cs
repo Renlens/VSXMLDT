@@ -23,6 +23,41 @@ namespace Renlen.FileTranslator
         {
             InitializeComponent();
         }
+
+        private OpenFileDialog addFileConrtol;
+        private bool flagUpdate = false;
+        private bool flagFilter = false;
+        private bool SelectFile()
+        {
+            if (FileTypes.Count == 0)
+            {
+                MessageBox.Show("未找到扩展类型，请至少成功加载一个扩展类型后再使用。", "消息");
+                return false;
+            }
+            if (addFileConrtol == null)
+            {
+                addFileConrtol = new OpenFileDialog()
+                {
+                    FileName = "",
+                    Multiselect = true
+                };
+                flagFilter = true;
+            }
+            if (flagFilter)
+            {
+                StringBuilder fileFilter = new StringBuilder("所有文件|*.*");
+                foreach (TypeRef type in FileTypes)
+                {
+                    fileFilter.Append("|");
+                    fileFilter.Append(type.FileFilter);
+                }
+                addFileConrtol.Filter = fileFilter.ToString();
+                flagFilter = false;
+            }
+            return addFileConrtol.ShowDialog() == DialogResult.OK;
+        }
+
+        #region Init
         private void InitializeControls()
         {
             //
@@ -65,6 +100,10 @@ namespace Renlen.FileTranslator
         {
 
         }
+        private void InitializeConfig()
+        {
+            UpdateSpen = 0;
+        }
         private void LoadFiles()
         {
             Files.AddRange(TestFile.CreateTestFiles(0).Select(file => new TranslatingFile(file)));
@@ -89,13 +128,15 @@ namespace Renlen.FileTranslator
                 }
             });
         }
+        #endregion
 
         private readonly List<TranslatingFile> Files = new List<TranslatingFile>();
         private void Form1_Load(object sender, EventArgs e)
         {
             InitializeControls();
-            GetConfig();
             SetDataSource();
+            GetConfig();
+            InitializeConfig();
             LoadFiles();
             RefreshFiles();
         }
@@ -107,34 +148,27 @@ namespace Renlen.FileTranslator
 
         private async void btnAdd_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
         {
-            if (FileTypes.Count == 0)
+            if (SelectFile())
             {
-                MessageBox.Show("未找到扩展类型，请至少成功加载一个扩展类型后再使用。","消息");
-                return;
-            }
-            OpenFileDialog openFileDialog = new OpenFileDialog()
-            {
-                FileName = ""
-            };
-            StringBuilder fileFilter = new StringBuilder("所有文件|*.*");
-            foreach (TypeRef type in FileTypes)
-            {
-                fileFilter.Append("|");
-                fileFilter.Append(type.FileFilter);
-            }
-            openFileDialog.Filter = fileFilter.ToString();
-            if (openFileDialog.ShowDialog() == DialogResult.OK)
-            {
-                int index = 0;
-                if (openFileDialog.FilterIndex > 1)
+                if (addFileConrtol.FileNames.Length > 0)
                 {
-                    index = openFileDialog.FilterIndex - 2;
+                    int index = 0;
+                    if (addFileConrtol.FilterIndex > 1)
+                    {
+                        index = addFileConrtol.FilterIndex - 2;
+                    }
+                    List<Task> tasks = new List<Task>(addFileConrtol.FileNames.Length);
+                    foreach (string path in addFileConrtol.FileNames)
+                    {
+                        IWillTranslateFile file = FileTypes[index].Create(path);
+                        Files.Add(new TranslatingFile(file));
+                        OnUpdateData();
+                        tasks.Add(Files.Last().StatisticsAsync());
+                    }
+                    await Task.Factory.ContinueWhenAny(tasks.ToArray(), task => OnUpdateData());
+                    await Task.WhenAll(tasks);
+                    OnUpdateData(true);
                 }
-                IWillTranslateFile file = FileTypes[index].Create(openFileDialog.FileName);
-                Files.Add(new TranslatingFile(file));
-                gridControl1.RefreshDataSource();
-                await Files.Last().StatisticsAsync();
-                gridControl1.RefreshDataSource();
             }
         }
 
@@ -144,6 +178,39 @@ namespace Renlen.FileTranslator
             {
                 menuMain.ShowPopup(MousePosition);
             }
+        }
+
+        private void timerUpdate_Tick(object sender, EventArgs e)
+        {
+            if (flagUpdate)
+            {
+                gridControl1.RefreshDataSource();
+                flagUpdate = false;
+            }
+        }
+
+        public void OnUpdateData(bool isnow = false)
+        {
+            Log($"请求更新数据: {isnow}");
+            if (isnow || UpdateSpen == 0)
+            {
+                gridControl1.RefreshDataSource();
+                flagUpdate = false;
+            }
+            else
+            {
+                flagUpdate = true;
+            }
+        }
+        public void OnUpdateFilter()
+        {
+            flagFilter = true;
+        }
+        public static void Log(string msg)
+        {
+#if DEBUG
+            Console.WriteLine($"{DateTime.Now.ToString("yyyy/MM/dd HH:mm:ss")} - DEBUG - {msg}");
+#endif
         }
     }
 }

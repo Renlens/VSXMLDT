@@ -59,6 +59,7 @@
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <PropertyGroup>
-    <PostBuildEvent>del D:\Renlen\MyCode\Renlens\VSXMLDT\FileTranslator\OutPut\FileType\Renlen.TranslateFile.dll</PostBuildEvent>
+    <PostBuildEvent>
+    </PostBuildEvent>
   </PropertyGroup>
 </Project>

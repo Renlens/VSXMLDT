@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Renlen.TranslateFile;
+using System;
 using System.Globalization;
 
 namespace Renlen.FileTranslator
@@ -32,7 +33,13 @@ namespace Renlen.FileTranslator
                 {
                     if (n < 0)
                     {
-                        return "-";
+                        FileSize state = (FileSize)n;
+                        return state switch
+                        {
+                            FileSize.Init => "Init...",
+                            FileSize.Uninit => "Uninit",
+                            _ => "-"
+                        };
                     }
 
                     string[] ranks = { " B", "KB", "MB", "GB", "TB", "PB", "EB", "ZB", "YB" };
@@ -69,7 +76,13 @@ namespace Renlen.FileTranslator
                 {
                     if (n < 0)
                     {
-                        return "-";
+                        FileSize state = (FileSize)n;
+                        return state switch
+                        {
+                            FileSize.Init => "Init...",
+                            FileSize.Uninit => "Uninit",
+                            _ => "-"
+                        };
                     }
                     string[] ranks = { "", "万", "亿", "万亿", "亿亿" };
                     int rankMax = ranks.Length - 1;

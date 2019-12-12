@@ -58,6 +58,7 @@ namespace Renlen.FileTranslator
             this.barDockControlBottom = new DevExpress.XtraBars.BarDockControl();
             this.barDockControlLeft = new DevExpress.XtraBars.BarDockControl();
             this.barDockControlRight = new DevExpress.XtraBars.BarDockControl();
+            this.timerUpdate = new System.Windows.Forms.Timer(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.gridControl1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.gridView1)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.upEditSourceLanguage)).BeginInit();
@@ -76,10 +77,8 @@ namespace Renlen.FileTranslator
             this.gridControl1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.gridControl1.EmbeddedNavigator.Margin = new System.Windows.Forms.Padding(4);
-            this.gridControl1.Location = new System.Drawing.Point(16, 55);
+            this.gridControl1.Location = new System.Drawing.Point(12, 44);
             this.gridControl1.MainView = this.gridView1;
-            this.gridControl1.Margin = new System.Windows.Forms.Padding(4);
             this.gridControl1.Name = "gridControl1";
             this.gridControl1.RepositoryItems.AddRange(new DevExpress.XtraEditors.Repository.RepositoryItem[] {
             this.upEditSourceLanguage,
@@ -87,7 +86,7 @@ namespace Renlen.FileTranslator
             this.repositoryItemProgressBar1,
             this.repositoryItemButtonEdit1,
             this.upEditTargetLanguage});
-            this.gridControl1.Size = new System.Drawing.Size(1466, 618);
+            this.gridControl1.Size = new System.Drawing.Size(1100, 494);
             this.gridControl1.TabIndex = 0;
             this.gridControl1.ViewCollection.AddRange(new DevExpress.XtraGrid.Views.Base.BaseView[] {
             this.gridView1});
@@ -106,7 +105,6 @@ namespace Renlen.FileTranslator
             this.colProgress,
             this.colState,
             this.colOperation});
-            this.gridView1.DetailHeight = 437;
             this.gridView1.GridControl = this.gridControl1;
             this.gridView1.Name = "gridView1";
             this.gridView1.OptionsView.ShowGroupPanel = false;
@@ -115,14 +113,13 @@ namespace Renlen.FileTranslator
             // 
             this.colName.Caption = "File Name";
             this.colName.FieldName = "Name";
-            this.colName.MinWidth = 27;
             this.colName.Name = "colName";
             this.colName.OptionsColumn.AllowEdit = false;
             this.colName.OptionsColumn.ReadOnly = true;
             this.colName.OptionsFilter.AllowAutoFilter = false;
             this.colName.Visible = true;
             this.colName.VisibleIndex = 0;
-            this.colName.Width = 125;
+            this.colName.Width = 94;
             // 
             // colFileSize
             // 
@@ -130,14 +127,13 @@ namespace Renlen.FileTranslator
             this.colFileSize.DisplayFormat.FormatString = "S5";
             this.colFileSize.DisplayFormat.FormatType = DevExpress.Utils.FormatType.Custom;
             this.colFileSize.FieldName = "FileSize";
-            this.colFileSize.MinWidth = 27;
             this.colFileSize.Name = "colFileSize";
             this.colFileSize.OptionsColumn.AllowEdit = false;
             this.colFileSize.OptionsColumn.ReadOnly = true;
             this.colFileSize.OptionsFilter.AllowAutoFilter = false;
             this.colFileSize.Visible = true;
             this.colFileSize.VisibleIndex = 1;
-            this.colFileSize.Width = 115;
+            this.colFileSize.Width = 86;
             // 
             // colTextLength
             // 
@@ -145,27 +141,25 @@ namespace Renlen.FileTranslator
             this.colTextLength.DisplayFormat.FormatString = "Z5";
             this.colTextLength.DisplayFormat.FormatType = DevExpress.Utils.FormatType.Custom;
             this.colTextLength.FieldName = "TextLength";
-            this.colTextLength.MinWidth = 27;
             this.colTextLength.Name = "colTextLength";
             this.colTextLength.OptionsColumn.AllowEdit = false;
             this.colTextLength.OptionsColumn.ReadOnly = true;
             this.colTextLength.OptionsFilter.AllowAutoFilter = false;
             this.colTextLength.Visible = true;
             this.colTextLength.VisibleIndex = 2;
-            this.colTextLength.Width = 115;
+            this.colTextLength.Width = 86;
             // 
             // colDirectoryPath
             // 
             this.colDirectoryPath.Caption = "Directory Path";
             this.colDirectoryPath.FieldName = "DirectoryPath";
-            this.colDirectoryPath.MinWidth = 27;
             this.colDirectoryPath.Name = "colDirectoryPath";
             this.colDirectoryPath.OptionsColumn.AllowEdit = false;
             this.colDirectoryPath.OptionsColumn.ReadOnly = true;
             this.colDirectoryPath.OptionsFilter.AllowAutoFilter = false;
             this.colDirectoryPath.Visible = true;
             this.colDirectoryPath.VisibleIndex = 3;
-            this.colDirectoryPath.Width = 113;
+            this.colDirectoryPath.Width = 85;
             // 
             // colSourceLanguage
             // 
@@ -173,11 +167,10 @@ namespace Renlen.FileTranslator
             this.colSourceLanguage.ColumnEdit = this.upEditSourceLanguage;
             this.colSourceLanguage.FieldName = "SourceLanguage";
             this.colSourceLanguage.FilterMode = DevExpress.XtraGrid.ColumnFilterMode.DisplayText;
-            this.colSourceLanguage.MinWidth = 27;
             this.colSourceLanguage.Name = "colSourceLanguage";
             this.colSourceLanguage.Visible = true;
             this.colSourceLanguage.VisibleIndex = 4;
-            this.colSourceLanguage.Width = 188;
+            this.colSourceLanguage.Width = 141;
             // 
             // upEditSourceLanguage
             // 
@@ -187,7 +180,7 @@ namespace Renlen.FileTranslator
             this.upEditSourceLanguage.DisplayMember = "This";
             this.upEditSourceLanguage.Name = "upEditSourceLanguage";
             this.upEditSourceLanguage.NullText = "Null";
-            this.upEditSourceLanguage.View = this.viewUpEditLanguage;
+            this.upEditSourceLanguage.PopupView = this.viewUpEditLanguage;
             this.upEditSourceLanguage.ValueMember = "This";
             // 
             // viewUpEditLanguage
@@ -202,11 +195,10 @@ namespace Renlen.FileTranslator
             this.colTargetLanguage.Caption = "Target Language";
             this.colTargetLanguage.ColumnEdit = this.upEditTargetLanguage;
             this.colTargetLanguage.FieldName = "TargetLanguage";
-            this.colTargetLanguage.MinWidth = 27;
             this.colTargetLanguage.Name = "colTargetLanguage";
             this.colTargetLanguage.Visible = true;
             this.colTargetLanguage.VisibleIndex = 5;
-            this.colTargetLanguage.Width = 187;
+            this.colTargetLanguage.Width = 140;
             // 
             // upEditTargetLanguage
             // 
@@ -215,18 +207,17 @@ namespace Renlen.FileTranslator
             new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
             this.upEditTargetLanguage.Name = "upEditTargetLanguage";
             this.upEditTargetLanguage.NullText = "Null";
-            this.upEditTargetLanguage.View = this.viewUpEditLanguage;
+            this.upEditTargetLanguage.PopupView = this.viewUpEditLanguage;
             // 
             // colOutput
             // 
             this.colOutput.Caption = "Output";
             this.colOutput.ColumnEdit = this.upEditOutput;
             this.colOutput.FieldName = "Output";
-            this.colOutput.MinWidth = 27;
             this.colOutput.Name = "colOutput";
             this.colOutput.Visible = true;
             this.colOutput.VisibleIndex = 6;
-            this.colOutput.Width = 157;
+            this.colOutput.Width = 118;
             // 
             // upEditOutput
             // 
@@ -235,7 +226,7 @@ namespace Renlen.FileTranslator
             new DevExpress.XtraEditors.Controls.EditorButton(DevExpress.XtraEditors.Controls.ButtonPredefines.Combo)});
             this.upEditOutput.Name = "upEditOutput";
             this.upEditOutput.NullText = "Null";
-            this.upEditOutput.View = this.viewUpEditOutput;
+            this.upEditOutput.PopupView = this.viewUpEditOutput;
             // 
             // viewUpEditOutput
             // 
@@ -249,11 +240,10 @@ namespace Renlen.FileTranslator
             this.colProgress.Caption = "Progress";
             this.colProgress.ColumnEdit = this.repositoryItemProgressBar1;
             this.colProgress.FieldName = "Progress";
-            this.colProgress.MinWidth = 27;
             this.colProgress.Name = "colProgress";
             this.colProgress.Visible = true;
             this.colProgress.VisibleIndex = 7;
-            this.colProgress.Width = 230;
+            this.colProgress.Width = 172;
             // 
             // repositoryItemProgressBar1
             // 
@@ -263,21 +253,18 @@ namespace Renlen.FileTranslator
             // 
             this.colState.Caption = "State";
             this.colState.FieldName = "State";
-            this.colState.MinWidth = 27;
             this.colState.Name = "colState";
             this.colState.Visible = true;
             this.colState.VisibleIndex = 8;
-            this.colState.Width = 100;
             // 
             // colOperation
             // 
             this.colOperation.Caption = "Operation";
             this.colOperation.ColumnEdit = this.repositoryItemButtonEdit1;
-            this.colOperation.MinWidth = 27;
             this.colOperation.Name = "colOperation";
             this.colOperation.Visible = true;
             this.colOperation.VisibleIndex = 9;
-            this.colOperation.Width = 200;
+            this.colOperation.Width = 150;
             // 
             // repositoryItemButtonEdit1
             // 
@@ -296,9 +283,10 @@ namespace Renlen.FileTranslator
             // 
             // simpleButton1
             // 
-            this.simpleButton1.Location = new System.Drawing.Point(1362, 12);
+            this.simpleButton1.Location = new System.Drawing.Point(1022, 10);
+            this.simpleButton1.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
             this.simpleButton1.Name = "simpleButton1";
-            this.simpleButton1.Size = new System.Drawing.Size(81, 29);
+            this.simpleButton1.Size = new System.Drawing.Size(61, 23);
             this.simpleButton1.TabIndex = 1;
             this.simpleButton1.Text = "Test";
             this.simpleButton1.Click += new System.EventHandler(this.simpleButton1_Click);
@@ -333,45 +321,52 @@ namespace Renlen.FileTranslator
             this.barDockControlTop.CausesValidation = false;
             this.barDockControlTop.Dock = System.Windows.Forms.DockStyle.Top;
             this.barDockControlTop.Location = new System.Drawing.Point(0, 0);
-            //this.barDockControlTop.Manager = this.barManager1;
-            this.barDockControlTop.Size = new System.Drawing.Size(1495, 0);
+            this.barDockControlTop.Manager = this.barManager1;
+            this.barDockControlTop.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.barDockControlTop.Size = new System.Drawing.Size(1121, 0);
             // 
             // barDockControlBottom
             // 
             this.barDockControlBottom.CausesValidation = false;
             this.barDockControlBottom.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.barDockControlBottom.Location = new System.Drawing.Point(0, 688);
-            //this.barDockControlBottom.Manager = this.barManager1;
-            this.barDockControlBottom.Size = new System.Drawing.Size(1495, 0);
+            this.barDockControlBottom.Location = new System.Drawing.Point(0, 550);
+            this.barDockControlBottom.Manager = this.barManager1;
+            this.barDockControlBottom.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.barDockControlBottom.Size = new System.Drawing.Size(1121, 0);
             // 
             // barDockControlLeft
             // 
             this.barDockControlLeft.CausesValidation = false;
             this.barDockControlLeft.Dock = System.Windows.Forms.DockStyle.Left;
             this.barDockControlLeft.Location = new System.Drawing.Point(0, 0);
-            //this.barDockControlLeft.Manager = this.barManager1;
-            this.barDockControlLeft.Size = new System.Drawing.Size(0, 688);
+            this.barDockControlLeft.Manager = this.barManager1;
+            this.barDockControlLeft.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.barDockControlLeft.Size = new System.Drawing.Size(0, 550);
             // 
             // barDockControlRight
             // 
             this.barDockControlRight.CausesValidation = false;
             this.barDockControlRight.Dock = System.Windows.Forms.DockStyle.Right;
-            this.barDockControlRight.Location = new System.Drawing.Point(1495, 0);
-            //this.barDockControlRight.Manager = this.barManager1;
-            this.barDockControlRight.Size = new System.Drawing.Size(0, 688);
+            this.barDockControlRight.Location = new System.Drawing.Point(1121, 0);
+            this.barDockControlRight.Manager = this.barManager1;
+            this.barDockControlRight.Margin = new System.Windows.Forms.Padding(2, 2, 2, 2);
+            this.barDockControlRight.Size = new System.Drawing.Size(0, 550);
+            // 
+            // timerUpdate
+            // 
+            this.timerUpdate.Tick += new System.EventHandler(this.timerUpdate_Tick);
             // 
             // FormMain
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 12F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1495, 688);
+            this.ClientSize = new System.Drawing.Size(1121, 550);
             this.Controls.Add(this.simpleButton1);
             this.Controls.Add(this.gridControl1);
             this.Controls.Add(this.barDockControlLeft);
             this.Controls.Add(this.barDockControlRight);
             this.Controls.Add(this.barDockControlBottom);
             this.Controls.Add(this.barDockControlTop);
-            this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "FormMain";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "File Translator";
@@ -422,6 +417,7 @@ namespace Renlen.FileTranslator
         private DevExpress.XtraBars.BarDockControl barDockControlBottom;
         private DevExpress.XtraBars.BarDockControl barDockControlLeft;
         private DevExpress.XtraBars.BarDockControl barDockControlRight;
+        internal System.Windows.Forms.Timer timerUpdate;
     }
 }
 #endif

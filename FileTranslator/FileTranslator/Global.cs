@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections;
 using System.Collections.Concurrent;
 using System.Collections.Generic;
 using System.IO;
@@ -19,8 +18,30 @@ namespace Renlen.FileTranslator
         /// 全局唯一随机函数（项目内）
         /// </summary>
         public static Random GRandom { get; } = new Random();
+#if DEV
+        public static FormMain FormMain { get; } = new FormMain();
+#else
+        public static FormMain2 FormMain { get; } = new FormMain2();
+#endif
 
-        public static TypeList FileTypes = new TypeList();
+        public static TypeList FileTypes { get; } = new TypeList();
+
+        public static int UpdateSpen
+        {
+            get => FormMain.timerUpdate.Enabled ? FormMain.timerUpdate.Interval : 0;
+            set
+            {
+                if (value > 0)
+                {
+                    FormMain.timerUpdate.Interval = value;
+                    FormMain.timerUpdate.Start();
+                }
+                else
+                {
+                    FormMain.timerUpdate.Stop();
+                }
+            }
+        }
 
         public static bool LoadFileTypes(string path, out string message)
         {
@@ -68,49 +89,6 @@ namespace Renlen.FileTranslator
                 message = "加载反射文件列表：指定的路径不存在！";
                 return false;
             }
-        }
-    }
-
-    public class TypeList : IEnumerable<TypeRef>
-    {
-        private List<TypeRef> types = new List<TypeRef>();
-
-        public int Count => types.Count;
-        public TypeRef this[int index]
-        {
-            get => types[index];
-        }
-        public TypeRef this[string fullName]
-        {
-            get => types.FirstOrDefault(t => t.FullName == fullName);
-        }
-
-        public void Add(TypeRef type)
-        {
-            if (!Contains(type))
-            {
-                types.Add(type);
-            }
-        }
-
-        public void Remove(TypeRef type)
-        {
-            types.Remove(type);
-        }
-
-        public bool Contains(TypeRef type)
-        {
-            return types.Contains(type);
-        }
-
-        public IEnumerator<TypeRef> GetEnumerator()
-        {
-            return types.GetEnumerator();
-        }
-
-        IEnumerator IEnumerable.GetEnumerator()
-        {
-            return GetEnumerator();
         }
     }
 }

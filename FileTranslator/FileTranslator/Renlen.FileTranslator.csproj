@@ -115,6 +115,7 @@
     <Compile Include="TranslateState.cs" />
     <Compile Include="TranslatingFile.cs" />
     <Compile Include="TranslatingLine.cs" />
+    <Compile Include="TypeList.cs" />
     <Compile Include="TypeRef.cs" />
     <Compile Include="WillTranslateFile.cs" />
     <EmbeddedResource Include="FormMain2.resx">
@@ -123,7 +124,6 @@
     <EmbeddedResource Include="FormMain.resx">
       <DependentUpon>FormMain.cs</DependentUpon>
     </EmbeddedResource>
-    <EmbeddedResource Include="Properties\licenses.licx" />
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
