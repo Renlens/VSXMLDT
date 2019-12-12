@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Globalization;
+using System.IO;
 using System.Linq;
 using System.Reflection;
 using System.Threading;
@@ -31,10 +32,19 @@ namespace Renlen.FileTranslator
                     return null;
                 }
             };
+            string delPath = @"FileType\Renlen.TranslateFile.dll";
+            if (File.Exists(delPath))
+            {
+                File.Delete(delPath);
+            }
             Global.LoadFileTypes("FileType", out string msg);
             if (!string.IsNullOrWhiteSpace(msg))
             {
-                MessageBox.Show(msg);
+                string err = $"加载扩展类型时出错：\r\n{msg}";
+                if (MessageBox.Show($"{err}\r\n\r\n是否将错误信息复制到剪贴板？", "错误", MessageBoxButtons.YesNo) == DialogResult.Yes)
+                {
+                    Clipboard.SetText(err);
+                }
             }
 #if DEV
             Application.Run(new FormMain());

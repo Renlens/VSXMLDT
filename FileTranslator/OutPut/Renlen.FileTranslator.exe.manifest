@@ -906,14 +906,14 @@
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="Renlen.FileTranslator.exe" size="52736">
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="Renlen.FileTranslator.exe" size="53760">
       <assemblyIdentity name="Renlen.FileTranslator" version="1.0.0.0" language="neutral" processorArchitecture="msil" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>VWRUqr4Os/10KcxSCjoz1p1F8ReQ2EMx0TaleearenM=</dsig:DigestValue>
+        <dsig:DigestValue>m7vV3sWNL2sdaHjhFUQuNvOjawXwjKoEMoEDcNABdWo=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
@@ -925,7 +925,19 @@
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>EwMYZrq1nbz7QtMLbG2rsshm1ZKj4a7tA2qETWtmAYc=</dsig:DigestValue>
+        <dsig:DigestValue>P7+g0JVfwu4FKDC4UCsFNIb6sRyOQZG9gdb94V1cdME=</dsig:DigestValue>
+      </hash>
+    </dependentAssembly>
+  </dependency>
+  <dependency>
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="Renlen.XmlFileOfVS.dll" size="16384">
+      <assemblyIdentity name="Renlen.XmlFileOfVS" version="1.0.0.0" language="neutral" processorArchitecture="msil" />
+      <hash>
+        <dsig:Transforms>
+          <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+        </dsig:Transforms>
+        <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+        <dsig:DigestValue>V3sKLR4eK+/sObf3n0GoYhy5hy3OJQGWajmWKFP30hE=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>

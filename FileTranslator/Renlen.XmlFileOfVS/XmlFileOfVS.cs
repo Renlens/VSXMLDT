@@ -283,6 +283,7 @@ namespace Renlen.FileTranslator
                     }
                     else if (Enum.TryParse(node.ChildNodes[i].Name, out ElementType type))
                     {
+                        Console.WriteLine($"{type}");
                         if (ElementType.Insert.HasFlag(type))
                         {
                             nodeValue = node.ChildNodes[i].OuterXml;
@@ -313,6 +314,10 @@ namespace Renlen.FileTranslator
                             }
                         }
                     }
+                }
+                if (check)
+                {
+                    yield return new XmlFileOfVSLine(this, textBuilder.ToString(), memberName, path, index++, LineType.Element);
                 }
             }
         }

@@ -107,6 +107,11 @@ namespace Renlen.FileTranslator
 
         private async void btnAdd_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
         {
+            if (FileTypes.Count == 0)
+            {
+                MessageBox.Show("未找到扩展类型，请至少成功加载一个扩展类型后再使用。","消息");
+                return;
+            }
             OpenFileDialog openFileDialog = new OpenFileDialog()
             {
                 FileName = ""
@@ -120,14 +125,16 @@ namespace Renlen.FileTranslator
             openFileDialog.Filter = fileFilter.ToString();
             if (openFileDialog.ShowDialog() == DialogResult.OK)
             {
+                int index = 0;
                 if (openFileDialog.FilterIndex > 1)
                 {
-                    IWillTranslateFile file = FileTypes[openFileDialog.FilterIndex - 2].Create(openFileDialog.FileName);
-                    Files.Add(new TranslatingFile(file));
-                    gridControl1.RefreshDataSource();
-                    await Files.Last().StatisticsAsync();
-                    gridControl1.RefreshDataSource();
+                    index = openFileDialog.FilterIndex - 2;
                 }
+                IWillTranslateFile file = FileTypes[index].Create(openFileDialog.FileName);
+                Files.Add(new TranslatingFile(file));
+                gridControl1.RefreshDataSource();
+                await Files.Last().StatisticsAsync();
+                gridControl1.RefreshDataSource();
             }
         }
 

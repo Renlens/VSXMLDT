@@ -75,6 +75,7 @@ namespace Renlen.FileTranslator
     {
         private List<TypeRef> types = new List<TypeRef>();
 
+        public int Count => types.Count;
         public TypeRef this[int index]
         {
             get => types[index];

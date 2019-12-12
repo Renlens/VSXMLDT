@@ -1,0 +1,151 @@
+<?xml version="1.0"?>
+<doc>
+    <assembly>
+        <name>Renlen.XmlFileOfVS</name>
+    </assembly>
+    <members>
+        <member name="P:Renlen.FileTranslator.XmlFileOfVS.IsPause">
+            <summary>
+            获取指示此文件是否可以保存，下次继续翻译的值。始终为 True 。
+            </summary>
+        </member>
+        <member name="P:Renlen.FileTranslator.XmlFileOfVS.IsContinuous">
+            <summary>
+            获取指示此文件是否必须按固定顺序提交翻译结果的值。始终为 False 。
+            </summary>
+        </member>
+        <member name="P:Renlen.FileTranslator.XmlFileOfVS.IsFile">
+            <summary>
+            获取指示此文件的源是否是一个磁盘中的文件的值。
+            </summary>
+        </member>
+        <member name="P:Renlen.FileTranslator.XmlFileOfVS.FullPath">
+            <summary>
+            如果此文件是一个硬盘的文件，则此属性返回文件全路径。否则，返回文件的标识名，以路径相同的形式。
+            </summary>
+        </member>
+        <member name="P:Renlen.FileTranslator.XmlFileOfVS.IsFromFile">
+            <summary>
+            可以从文件创建实例。
+            </summary>
+        </member>
+        <member name="P:Renlen.FileTranslator.XmlFileOfVS.IsFromStream">
+            <summary>
+            可以从流创建实例。
+            </summary>
+        </member>
+        <member name="M:Renlen.FileTranslator.XmlFileOfVS.#ctor">
+            <summary>
+            初始化一个新实例。
+            </summary>
+        </member>
+        <member name="M:Renlen.FileTranslator.XmlFileOfVS.#ctor(System.String)">
+            <summary>
+            使用指定的 XML 文件初始化一个 <see cref="T:Renlen.FileTranslator.XmlFileOfVS"/> 对象。
+            </summary>
+            <param name="file"></param>
+        </member>
+        <member name="M:Renlen.FileTranslator.XmlFileOfVS.#ctor(System.Xml.XmlDocument,System.String,System.Boolean)">
+            <summary>
+            使用指定的 XML 文件初始化一个 <see cref="T:Renlen.FileTranslator.XmlFileOfVS"/> 对象。
+            </summary>
+            <param name="file"></param>
+            <param name="path"></param>
+            <param name="isFile"></param>
+        </member>
+        <member name="M:Renlen.FileTranslator.XmlFileOfVS.#ctor(System.IO.Stream)">
+            <summary>
+            从指定的流的当前位置加载一个 <see cref="T:Renlen.FileTranslator.XmlFileOfVS"/> 对象。
+            </summary>
+            <param name="stream"></param>
+        </member>
+        <member name="M:Renlen.FileTranslator.XmlFileOfVS.Load(System.IO.Stream)">
+            <summary>
+            从指定的流的当前位置加载数据。
+            </summary>
+            <param name="stream"></param>
+        </member>
+        <member name="M:Renlen.FileTranslator.XmlFileOfVS.GetFileSize">
+            <summary>
+            获取相关联的 XML 文件的大小
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Renlen.FileTranslator.XmlFileOfVS.GetTranslatingLines">
+            <summary>
+            test <see cref="M:Renlen.FileTranslator.XmlFileOfVS.GetTranslatingLines"/> test2
+            <para>
+            test<see cref="T:System.DTSubString"/> test 
+                <para>
+                testtest
+                </para>
+            </para>
+            test
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Renlen.FileTranslator.XmlFileOfVS.Analysis(System.Xml.XmlNode,System.String,System.String)">
+            <summary>
+            分析节点
+            </summary>
+            <param name="node"></param>
+            <param name="memberName"></param>
+            <param name="path"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Renlen.FileTranslator.XmlFileOfVS.GetReadWriter">
+            <summary>
+            获取可以读写此对象的读写器。
+            </summary>
+            <returns></returns>
+        </member>
+        <member name="M:Renlen.FileTranslator.XmlFileOfVS.FromFile(System.String)">
+            <summary>
+            从一个 XML 文件创建实例
+            </summary>
+            <param name="path"></param>
+            <returns></returns>
+        </member>
+        <member name="M:Renlen.FileTranslator.XmlFileOfVS.FromStream(System.IO.Stream)">
+            <summary>
+            从一个 XML 流创建实例
+            </summary>
+            <param name="stream"></param>
+            <returns></returns>
+        </member>
+        <member name="F:Renlen.FileTranslator.XmlFileOfVS.ElementType.NoElement">
+            <summary>
+            表示不是一个元素，而是作为一个类别
+            </summary>
+        </member>
+        <member name="F:Renlen.FileTranslator.XmlFileOfVS.ElementType.Insert">
+            <summary>
+            表示此元素应插入到文本中翻译
+            </summary>
+        </member>
+        <member name="F:Renlen.FileTranslator.XmlFileOfVS.ElementType.Separate">
+            <summary>
+            表示此元素应单独翻译
+            </summary>
+        </member>
+        <member name="F:Renlen.FileTranslator.XmlFileOfVS.ElementType.Skip">
+            <summary>
+            表示此元素应保持原样
+            </summary>
+        </member>
+        <member name="F:Renlen.FileTranslator.XmlFileOfVS.ElementType.Breakpoint">
+            <summary>
+            表示此元素应单独处理，并将前后元素分开
+            </summary>
+        </member>
+        <member name="M:Renlen.FileTranslator.XmlFileOfVS.XmlFileOfVSLine.CommitResult">
+            <summary>
+            <see cref="M:System.Object.GetType"/> 不可能返回以下哪种类型的 <see cref="T:System.Type"/> ?
+            <para /> A.<see cref="T:System.Type"/>
+            <para /> B.<see cref="T:System.Enum"/>
+            <para /> C.<see cref="T:System.Action"/>
+            <para /> D.<see cref="T:System.Enum"/>
+            </summary>
+        </member>
+    </members>
+</doc>
