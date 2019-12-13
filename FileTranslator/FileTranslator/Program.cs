@@ -7,6 +7,7 @@ using System.Reflection;
 using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using static Renlen.FileTranslator.Global;
 
 namespace Renlen.FileTranslator
 {
@@ -46,11 +47,8 @@ namespace Renlen.FileTranslator
                     Clipboard.SetText(err);
                 }
             }
-#if DEV
-            Application.Run(new FormMain());
-#else
-            Application.Run(new FormMain2());
-#endif
+
+            Application.Run(MainForm);
         }
     }
 }

@@ -12,17 +12,18 @@ namespace Renlen.FileTranslator
     public partial class XmlFileOfVS : IWillTranslateFile, IWillTranslateFileReadWrite
     {
         private static readonly ReadWriter readWriter = new ReadWriter();
-        private static readonly FileAbout about = new FileAbout()
-        {
-            Name = "Visual Studio 成员注释文档",
-            Caption = "对 Visual Studio 内程序集内的成员 XML 注释文档的翻译文件。必须遵循 XML 文档规范，否则结果可能有误。",
-            FileFilter = "Visual Studio 成员注释文档|*.xml",
-            Auther = "Renlen",
-            IsFromFile = true,
-            IsFromStream = true,
-            IsPause = true,
-            IsContinuous = false
-        };
+        private static readonly FileAbout about = null;
+        //private static readonly FileAbout about = new FileAbout()
+        //{
+        //    Name = "Visual Studio 成员注释文档",
+        //    Caption = "对 Visual Studio 内程序集内的成员 XML 注释文档的翻译文件。必须遵循 XML 文档规范，否则结果可能有误。",
+        //    FileFilter = "Visual Studio 成员注释文档|*.xml",
+        //    Auther = "Renlen",
+        //    IsFromFile = true,
+        //    IsFromStream = true,
+        //    IsPause = true,
+        //    IsContinuous = false
+        //};
 
         private FileSize fileSize = FileSize.Uninit;
         internal readonly XmlDocument xml = new XmlDocument();

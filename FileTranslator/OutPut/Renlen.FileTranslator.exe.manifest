@@ -913,7 +913,7 @@
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>MBVuuHb+Z5q9qSYZMte0Be1R7t0hqIxE86vR+WfWiz4=</dsig:DigestValue>
+        <dsig:DigestValue>68kPqUSlCKWjBcmK4gdxjcDgNRTbAJVA8gdzCIEYRAk=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
@@ -930,14 +930,14 @@
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="Renlen.XmlFileOfVS.dll" size="16384">
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="Renlen.XmlFileOfVS.dll" size="15872">
       <assemblyIdentity name="Renlen.XmlFileOfVS" version="1.0.0.0" language="neutral" processorArchitecture="msil" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>v+hH4AluOXBGP54qH7ZAVtIliTMdZU28plP8M+ABg1Y=</dsig:DigestValue>
+        <dsig:DigestValue>2R/nRArt8kVqf1bK63OVdsEWfUZTOB94BlIwd7Di59A=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>

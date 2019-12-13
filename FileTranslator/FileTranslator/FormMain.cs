@@ -161,6 +161,10 @@ namespace Renlen.FileTranslator
                     foreach (string path in addFileConrtol.FileNames)
                     {
                         IWillTranslateFile file = FileTypes[index].Create(path);
+                        if (file == null)
+                        {
+                            continue;
+                        }
                         Files.Add(new TranslatingFile(file));
                         OnUpdateData();
                         tasks.Add(Files.Last().StatisticsAsync());

@@ -19,7 +19,7 @@ namespace Renlen.FileTranslator
         /// </summary>
         public static Random GRandom { get; } = new Random();
 #if DEV
-        public static FormMain FormMain { get; } = new FormMain();
+        public static FormMain MainForm { get; } = new FormMain();
 #else
         public static FormMain2 FormMain { get; } = new FormMain2();
 #endif
@@ -28,17 +28,17 @@ namespace Renlen.FileTranslator
 
         public static int UpdateSpen
         {
-            get => FormMain.timerUpdate.Enabled ? FormMain.timerUpdate.Interval : 0;
+            get => MainForm.timerUpdate.Enabled ? MainForm.timerUpdate.Interval : 0;
             set
             {
                 if (value > 0)
                 {
-                    FormMain.timerUpdate.Interval = value;
-                    FormMain.timerUpdate.Start();
+                    MainForm.timerUpdate.Interval = value;
+                    MainForm.timerUpdate.Start();
                 }
                 else
                 {
-                    FormMain.timerUpdate.Stop();
+                    MainForm.timerUpdate.Stop();
                 }
             }
         }

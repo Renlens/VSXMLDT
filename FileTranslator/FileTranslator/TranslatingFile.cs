@@ -14,12 +14,13 @@ namespace Renlen.FileTranslator
         public long TextLength { get; private set; } = -3;
         public string DirectoryPath { get; private set; }
         public string FullPath { get; private set; }
-        public Language SourceLanguage { get; set; }
-        public Language TargetLanguage { get; set; }
-        public string Output { get; set; }
+        public Language SourceLanguage { get; set; } = Language.Default;
+        public Language TargetLanguage { get; set; } = Language.Default;
+        public string Output { get; set; } = "输出到 Output";
         public double Progress { get; set; }
         public TranslateState State { get; internal set; }
         private ConcurrentQueue<ITranslatingLine> Lines { get; set; } = new ConcurrentQueue<ITranslatingLine>();
+        private int lineCount;
         public TranslatingFile(IWillTranslateFile file)
         {
             File = file;
@@ -31,7 +32,7 @@ namespace Renlen.FileTranslator
             {
                 FullPath = file.FullPath;
             }
-            Name = Path.GetFileNameWithoutExtension(FullPath);
+            Name = Path.GetFileName(FullPath);
             DirectoryPath = Path.GetDirectoryName(FullPath);
         }
         public void Statistics()
@@ -51,6 +52,7 @@ namespace Renlen.FileTranslator
                 Lines.Enqueue(line);
             }
             TextLength = textLength;//.ToShow("Z5");
+            lineCount = Lines.Count;
             IsStatisticed = true;
         }
         public async Task StatisticsAsync()
