@@ -169,11 +169,24 @@ namespace Renlen.FileTranslator
                         OnUpdateData();
                         tasks.Add(Files.Last().StatisticsAsync());
                     }
-                    await Task.Factory.ContinueWhenAny(tasks.ToArray(), task => OnUpdateData());
-                    await Task.WhenAll(tasks);
-                    OnUpdateData(true);
+                    if (tasks.Count > 0)
+                    {
+                        await Task.Factory.ContinueWhenAny(tasks.ToArray(), task => OnUpdateData());
+                        await Task.WhenAll(tasks);
+                        OnUpdateData(true);
+                    }
                 }
             }
+        }
+        private async void btnStart_ItemClick(object sender, DevExpress.XtraBars.ItemClickEventArgs e)
+        {
+            TranslateState[] end = {
+                 TranslateState.Cancel,
+                 TranslateState.Completed,
+                 TranslateState.Error,
+                 TranslateState.Pause
+            };
+            await Files.FirstOrDefault(file => !end.Contains(file.State))?.StartTranslateAsync();
         }
 
         private void gridControl1_MouseClick(object sender, MouseEventArgs e)

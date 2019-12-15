@@ -12,19 +12,20 @@ namespace Renlen.FileTranslator
     public partial class XmlFileOfVS : IWillTranslateFile, IWillTranslateFileReadWrite
     {
         private static readonly ReadWriter readWriter = new ReadWriter();
-        private static readonly FileAbout about = null;
-        //private static readonly FileAbout about = new FileAbout()
-        //{
-        //    Name = "Visual Studio 成员注释文档",
-        //    Caption = "对 Visual Studio 内程序集内的成员 XML 注释文档的翻译文件。必须遵循 XML 文档规范，否则结果可能有误。",
-        //    FileFilter = "Visual Studio 成员注释文档|*.xml",
-        //    Auther = "Renlen",
-        //    IsFromFile = true,
-        //    IsFromStream = true,
-        //    IsPause = true,
-        //    IsContinuous = false
-        //};
+        //private static readonly FileAbout about = null;
+        private static readonly FileAbout about = new FileAbout()
+        {
+            Name = "Visual Studio 成员注释文档",
+            Caption = "对 Visual Studio 内程序集内的成员 XML 注释文档的翻译文件。必须遵循 XML 文档规范，否则结果可能有误。",
+            FileFilter = "Visual Studio 成员注释文档|*.xml",
+            Auther = "Renlen",
+            IsFromFile = true,
+            IsFromStream = true,
+            IsPause = true,
+            IsContinuous = false
+        };
 
+        private TempNodeCollection TempNodes { get; }
         private FileSize fileSize = FileSize.Uninit;
         internal readonly XmlDocument xml = new XmlDocument();
 
@@ -63,6 +64,7 @@ namespace Renlen.FileTranslator
             fileSize = FileSize.Uninit;
             IsFile = false;
             FullPath = "";
+            TempNodes = null;
         }
         /// <summary>
         /// 使用指定的 XML 文件初始化一个 <see cref="XmlFileOfVS"/> 对象。
@@ -76,6 +78,7 @@ namespace Renlen.FileTranslator
             xml.Load(stream);
             fileSize = (FileSize)stream.Length;
             //Load(stream);
+            TempNodes = new TempNodeCollection(this);
         }
         /// <summary>
         /// 使用指定的 XML 文件初始化一个 <see cref="XmlFileOfVS"/> 对象。
@@ -99,6 +102,7 @@ namespace Renlen.FileTranslator
             xml.Save(stream);
             fileSize = (FileSize)stream.Length;
             //Load(stream);
+            TempNodes = new TempNodeCollection(this);
         }
         /// <summary>
         /// 从指定的流的当前位置加载一个 <see cref="XmlFileOfVS"/> 对象。
@@ -107,6 +111,7 @@ namespace Renlen.FileTranslator
         private XmlFileOfVS(Stream stream)
         {
             Load(stream);
+            TempNodes = new TempNodeCollection(this);
         }
 
         /// <summary>
@@ -169,6 +174,7 @@ namespace Renlen.FileTranslator
             bw.Write(isnull);
             if (!isnull)
             {
+                //保存未翻译完的行
                 bw.Write(lines.Count);
                 IReadWriter<ITranslatingLine> readWriter = XmlFileOfVSLine.LineReadWriter;
                 foreach (ITranslatingLine line in lines)
@@ -299,6 +305,7 @@ namespace Renlen.FileTranslator
                             }
                             textBuilder.Clear();
                             check = false;
+                            index++;
                         }
                         else if (ElementType.Separate.HasFlag(type))
                         {
@@ -321,6 +328,107 @@ namespace Renlen.FileTranslator
                 }
             }
         }
+        /// <summary>
+        /// 分析节点
+        /// </summary>
+        /// <param name="node"></param>
+        /// <param name="memberName"></param>
+        /// <param name="path"></param>
+        /// <param name="temp"></param>
+        /// <returns></returns>
+        private void Analysis(XmlNode node, string memberName, string path, TempNode temp)
+        {
+            if (node.ChildNodes.Count == 0)
+            {
+                return;
+            }
+            else if (node.ChildNodes.Count == 1)
+            {
+                XmlNode line = node.FirstChild;
+                if (line.NodeType == XmlNodeType.Text)
+                {
+                    temp.Add(Combine(path, 0), line);
+                }
+                else if (Enum.TryParse(line.Name, out ElementType type))
+                {
+                    if (ElementType.Skip.HasFlag(type) || ElementType.Insert.HasFlag(type))
+                    {
+                        return;
+                    }
+                    else if (ElementType.Separate.HasFlag(type))
+                    {
+                        Analysis(line, memberName, Combine(path, 0), temp);
+                    }
+                }
+            }
+            else
+            {
+                int index = 0;
+                StringBuilder textBuilder = new StringBuilder();
+                bool check = false;
+                string nodeValue, nodeCheck;
+                int startIndex = -1;
+                int length = 0;
+                for (int i = 0; i < node.ChildNodes.Count; i++)
+                {
+                    if (node.ChildNodes[i].NodeType == XmlNodeType.Text)
+                    {
+                        if (startIndex == -1)
+                        {
+                            startIndex = i;
+                        }
+                        length++;
+                        nodeValue = node.ChildNodes[i].Value;
+                        nodeCheck = nodeValue;
+                        textBuilder.Append(node.ChildNodes[i].Value);
+                        check = check || !string.IsNullOrWhiteSpace(nodeCheck);
+                    }
+                    else if (Enum.TryParse(node.ChildNodes[i].Name, out ElementType type))
+                    {
+                        if (ElementType.Insert.HasFlag(type))
+                        {
+                            if (startIndex == -1)
+                            {
+                                startIndex = i;
+                            }
+                            length++;
+                            nodeValue = node.ChildNodes[i].OuterXml;
+                            nodeCheck = node.ChildNodes[i].InnerText;
+                            textBuilder.Append(nodeValue);
+                            check = check || !string.IsNullOrWhiteSpace(nodeCheck);
+                        }
+                        else if (ElementType.Skip.HasFlag(type))
+                        {
+                            if (check)
+                            {
+                                temp.Add(Combine(path, index), node, startIndex, length);
+                            }
+                            startIndex = -1;
+                            length = 0;
+                            textBuilder.Clear();
+                            check = false;
+                            index++;
+                        }
+                        else if (ElementType.Separate.HasFlag(type))
+                        {
+                            if (check)
+                            {
+                                temp.Add(Combine(path, index++), node, startIndex, length);
+                            }
+                            startIndex = -1;
+                            length = 0;
+                            textBuilder.Clear();
+                            check = false;
+                            Analysis(node.ChildNodes[i], memberName, Combine(path, index++), temp);
+                        }
+                    }
+                }
+                if (check)
+                {
+                    temp.Add(Combine(path, index++), node, startIndex, length);
+                }
+            }
+        }
 
         private string GetMemberName(XmlNode node)
         {
@@ -330,6 +438,24 @@ namespace Renlen.FileTranslator
         private string Combine(string path, int index)
         {
             return $"{path}/{index}";
+        }
+
+        private TempNode GetTempNode(string name)
+        {
+            TempNode tempNode = new TempNode(name);
+            XmlNodeList members = xml.GetElementsByTagName("member");
+            foreach (XmlNode member in members)
+            {
+                if (GetMemberName(member) == name)
+                {
+                    for (int i = 0; i < member.ChildNodes.Count; i++)
+                    {
+                        Analysis(member.ChildNodes[i], name, i.ToString(), tempNode);
+                    }
+                    return tempNode;
+                }
+            }
+            return null;
         }
 
         //private string GetNodePath(XmlNode node)
@@ -380,6 +506,102 @@ namespace Renlen.FileTranslator
             XmlDocument xml = new XmlDocument();
             xml.Load(stream);
             return new XmlFileOfVS(xml, @"Workspace\未命名", false);
+        }
+
+        /// <summary>
+        /// 表示缓存的一个成员，通过索引器可以根据节点路径获取表示行的节点值
+        /// </summary>
+        private class TempNode
+        {
+            private readonly Dictionary<string, TempValue> temp = new Dictionary<string, TempValue>();
+            public string Name { get; }
+            public TempValue this[string path]
+            {
+                get => temp.TryGetValue(path, out TempValue value) ? value : null;
+            }
+            public TempNode(string name)
+            {
+                Name = name;
+            }
+            public void Add(string path, XmlNode node)
+            {
+                try
+                {
+                    temp.Add(path, new TempValue(node));
+                }
+                catch
+                {
+                }
+            }
+            public void Add(string path, XmlNode node, int start, int length)
+            {
+                temp.Add(path, new TempValue(node, start, length));
+            }
+        }
+
+        /// <summary>
+        /// 表示缓存节点值，它可以是单个xml节点，也可以是多个xml节点
+        /// </summary>
+        private class TempValue
+        {
+            private XmlNode node;
+            private int startIndex;
+            private int length;
+            public bool IsSingle { get; }
+
+            public TempValue(XmlNode node)
+            {
+                this.node = node;
+                IsSingle = true;
+            }
+
+            public TempValue(XmlNode node, int start, int length)
+            {
+                this.node = node;
+                startIndex = start;
+                this.length = length;
+                IsSingle = false;
+            }
+
+            public void Commit(string result)
+            {
+                if (IsSingle)
+                {
+                    string originalText;
+                    if (node.NodeType == XmlNodeType.Text)
+                    {
+                        originalText = node.Value;
+                        node.Value = $"{result} Original : {originalText}";
+                    }
+                    else
+                    {
+                        originalText = node.InnerXml;
+                        node.InnerXml = $"{result} Original : {originalText}";
+                    }
+                }
+                else
+                {
+                    StringBuilder originalText = new StringBuilder();
+                    for (int i = 0; i < length; i++)
+                    {
+                        if (node.ChildNodes[startIndex].NodeType == XmlNodeType.Text)
+                        {
+                            originalText.Append(node.ChildNodes[startIndex].Value);
+                        }
+                        else
+                        {
+                            originalText.Append(node.ChildNodes[startIndex].OuterXml);
+                        }
+                        node.RemoveChild(node.ChildNodes[startIndex]);
+                    }
+                    XmlNode xmlNode = node.OwnerDocument.CreateElement("resulttemp");
+                    xmlNode.InnerXml = $"{result} Original : {originalText.ToString()}";
+                    for (int i = startIndex; xmlNode.ChildNodes.Count > 0; i++)
+                    {
+                        node.InsertBefore(xmlNode.ChildNodes[0], node.ChildNodes[i]);
+                    }
+                }
+            }
         }
     }
 }

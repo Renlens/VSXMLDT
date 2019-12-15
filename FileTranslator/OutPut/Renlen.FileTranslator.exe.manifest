@@ -906,14 +906,14 @@
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="Renlen.FileTranslator.exe" size="55296">
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="Renlen.FileTranslator.exe" size="57344">
       <assemblyIdentity name="Renlen.FileTranslator" version="1.0.0.0" language="neutral" processorArchitecture="msil" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>68kPqUSlCKWjBcmK4gdxjcDgNRTbAJVA8gdzCIEYRAk=</dsig:DigestValue>
+        <dsig:DigestValue>fMjMw2S91aLrKiHUDx0ZjdS5JE9pJPE3YAXGg4EUEfM=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
@@ -930,14 +930,14 @@
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="Renlen.XmlFileOfVS.dll" size="15872">
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="Renlen.XmlFileOfVS.dll" size="21504">
       <assemblyIdentity name="Renlen.XmlFileOfVS" version="1.0.0.0" language="neutral" processorArchitecture="msil" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>2R/nRArt8kVqf1bK63OVdsEWfUZTOB94BlIwd7Di59A=</dsig:DigestValue>
+        <dsig:DigestValue>kkb1RkU024wFmHcS4lZDICFjGz+vyeHkEUcUGTsJ9GE=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>

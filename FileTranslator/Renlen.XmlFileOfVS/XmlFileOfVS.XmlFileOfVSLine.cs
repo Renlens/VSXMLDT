@@ -39,7 +39,7 @@ namespace Renlen.FileTranslator
                     }
                     else if (type == LineType.Element)
                     {
-
+                        finalResult = result;
                     }
                     return finalResult;
                 }
@@ -59,16 +59,11 @@ namespace Renlen.FileTranslator
                 this.type = type;
             }
 
-            /// <summary>
-            /// <see cref="object.GetType"/> 不可能返回以下哪种类型的 <see cref="Type"/> ?
-            /// <para /> A.<see cref="System.Type"/>
-            /// <para /> B.<see cref="System.Enum"/>
-            /// <para /> C.<see cref="System.Action"/>
-            /// <para /> D.<see cref="System.Enum"/>
-            /// </summary>
             public void CommitResult()
             {
-                
+                TempNode tempNode = File.TempNodes[memberName];
+                TempValue tempValue = tempNode?[$"{path}/{index}"];
+                tempValue?.Commit(Result);
             }
 
             public override string ToString()

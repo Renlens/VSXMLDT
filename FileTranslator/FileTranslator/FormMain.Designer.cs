@@ -53,6 +53,7 @@ namespace Renlen.FileTranslator
             this.simpleButton1 = new DevExpress.XtraEditors.SimpleButton();
             this.menuMain = new DevExpress.XtraBars.PopupMenu(this.components);
             this.btnAdd = new DevExpress.XtraBars.BarButtonItem();
+            this.btnStart = new DevExpress.XtraBars.BarButtonItem();
             this.barManager1 = new DevExpress.XtraBars.BarManager(this.components);
             this.barDockControlTop = new DevExpress.XtraBars.BarDockControl();
             this.barDockControlBottom = new DevExpress.XtraBars.BarDockControl();
@@ -294,7 +295,8 @@ namespace Renlen.FileTranslator
             // menuMain
             // 
             this.menuMain.LinksPersistInfo.AddRange(new DevExpress.XtraBars.LinkPersistInfo[] {
-            new DevExpress.XtraBars.LinkPersistInfo(this.btnAdd)});
+            new DevExpress.XtraBars.LinkPersistInfo(this.btnAdd),
+            new DevExpress.XtraBars.LinkPersistInfo(this.btnStart)});
             this.menuMain.Manager = this.barManager1;
             this.menuMain.Name = "menuMain";
             // 
@@ -305,6 +307,13 @@ namespace Renlen.FileTranslator
             this.btnAdd.Name = "btnAdd";
             this.btnAdd.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.btnAdd_ItemClick);
             // 
+            // btnStart
+            // 
+            this.btnStart.Caption = "&Start";
+            this.btnStart.Id = 1;
+            this.btnStart.Name = "btnStart";
+            this.btnStart.ItemClick += new DevExpress.XtraBars.ItemClickEventHandler(this.btnStart_ItemClick);
+            // 
             // barManager1
             // 
             this.barManager1.DockControls.Add(this.barDockControlTop);
@@ -313,7 +322,8 @@ namespace Renlen.FileTranslator
             this.barManager1.DockControls.Add(this.barDockControlRight);
             this.barManager1.Form = this;
             this.barManager1.Items.AddRange(new DevExpress.XtraBars.BarItem[] {
-            this.btnAdd});
+            this.btnAdd,
+            this.btnStart});
             this.barManager1.MaxItemId = 1;
             // 
             // barDockControlTop
@@ -412,6 +422,7 @@ namespace Renlen.FileTranslator
         private DevExpress.XtraEditors.Repository.RepositoryItemGridLookUpEdit upEditTargetLanguage;
         private DevExpress.XtraBars.PopupMenu menuMain;
         private DevExpress.XtraBars.BarButtonItem btnAdd;
+        private DevExpress.XtraBars.BarButtonItem btnStart;
         private DevExpress.XtraBars.BarManager barManager1;
         private DevExpress.XtraBars.BarDockControl barDockControlTop;
         private DevExpress.XtraBars.BarDockControl barDockControlBottom;

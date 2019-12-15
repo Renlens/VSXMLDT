@@ -93,6 +93,16 @@
             <param name="path"></param>
             <returns></returns>
         </member>
+        <member name="M:Renlen.FileTranslator.XmlFileOfVS.Analysis(System.Xml.XmlNode,System.String,System.String,Renlen.FileTranslator.XmlFileOfVS.TempNode)">
+            <summary>
+            分析节点
+            </summary>
+            <param name="node"></param>
+            <param name="memberName"></param>
+            <param name="path"></param>
+            <param name="temp"></param>
+            <returns></returns>
+        </member>
         <member name="M:Renlen.FileTranslator.XmlFileOfVS.GetReadWriter">
             <summary>
             获取可以读写此对象的读写器。
@@ -112,6 +122,16 @@
             </summary>
             <param name="stream"></param>
             <returns></returns>
+        </member>
+        <member name="T:Renlen.FileTranslator.XmlFileOfVS.TempNode">
+            <summary>
+            表示缓存的一个成员，通过索引器可以根据节点路径获取表示行的节点值
+            </summary>
+        </member>
+        <member name="T:Renlen.FileTranslator.XmlFileOfVS.TempValue">
+            <summary>
+            表示缓存节点值，它可以是单个xml节点，也可以是多个xml节点
+            </summary>
         </member>
         <member name="F:Renlen.FileTranslator.XmlFileOfVS.ElementType.NoElement">
             <summary>
@@ -138,14 +158,17 @@
             表示此元素应单独处理，并将前后元素分开
             </summary>
         </member>
-        <member name="M:Renlen.FileTranslator.XmlFileOfVS.XmlFileOfVSLine.CommitResult">
+        <member name="T:Renlen.FileTranslator.XmlFileOfVS.TempNodeCollection">
             <summary>
-            <see cref="M:System.Object.GetType"/> 不可能返回以下哪种类型的 <see cref="T:System.Type"/> ?
-            <para /> A.<see cref="T:System.Type"/>
-            <para /> B.<see cref="T:System.Enum"/>
-            <para /> C.<see cref="T:System.Action"/>
-            <para /> D.<see cref="T:System.Enum"/>
+            表示节点
             </summary>
+        </member>
+        <member name="M:Renlen.FileTranslator.XmlFileOfVS.TempNodeCollection.Remove(Renlen.FileTranslator.XmlFileOfVS.TempNode)">
+            <summary>
+            始终抛出 <see cref="T:System.NotImplementedException"/> 异常
+            </summary>
+            <param name="item"></param>
+            <returns></returns>
         </member>
     </members>
 </doc>

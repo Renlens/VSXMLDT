@@ -64,6 +64,10 @@ namespace Renlen.FileTranslator
         {
             Translate();
         }
+        public async Task StartTranslateAsync()
+        {
+            await Task.Run(Translate);
+        }
 
         private void Translate()
         {
@@ -73,6 +77,7 @@ namespace Renlen.FileTranslator
                 line.Result = BaiduTranslator.TestTranslation(line.Text);
                 line.CommitResult();
             }
+            State = TranslateState.Completed;
         }
     }
 }

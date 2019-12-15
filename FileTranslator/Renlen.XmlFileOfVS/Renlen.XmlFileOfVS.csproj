@@ -48,6 +48,7 @@
     <Compile Include="XmlFileOfVS.ElementType.cs" />
     <Compile Include="XmlFileOfVS.LineType.cs" />
     <Compile Include="XmlFileOfVS.ReadWriter.cs" />
+    <Compile Include="XmlFileOfVS.TempNodeCollection.cs" />
     <Compile Include="XmlFileOfVS.XmlFileOfVSLine.cs" />
     <Compile Include="XmlFileOfVS.XmlFileOfVSLine.ReadWriter.cs" />
   </ItemGroup>
