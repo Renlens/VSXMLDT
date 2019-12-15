@@ -9,16 +9,21 @@ namespace Renlen.FileTranslator
     {
         private partial class XmlFileOfVSLine
         {
-            private class ReadWriter : IReadWriter<ITranslatingLine>
+            private class ReadWriter : IReadWriter<XmlFileOfVSLine>
             {
-                public ITranslatingLine Read(Stream stream)
+                private readonly XmlFileOfVS xml;
+                public ReadWriter(XmlFileOfVS xml)
                 {
-                    throw new NotImplementedException();
+                    this.xml = xml;
+                }
+                public XmlFileOfVSLine Read(Stream stream)
+                {
+                    return new XmlFileOfVSLine(stream) { File = xml };
                 }
 
-                public void Write(Stream stream, ITranslatingLine o)
+                public void Write(Stream stream, XmlFileOfVSLine line)
                 {
-                    throw new NotImplementedException();
+                    line.Save(stream);
                 }
             }
         }

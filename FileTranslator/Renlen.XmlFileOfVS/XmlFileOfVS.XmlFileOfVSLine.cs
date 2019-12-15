@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Xml;
 using Renlen.TranslateFile;
 
@@ -9,9 +10,12 @@ namespace Renlen.FileTranslator
     {
         private partial class XmlFileOfVSLine : ITranslatingLine
         {
-            public static IReadWriter<ITranslatingLine> LineReadWriter { get; } = new ReadWriter();
+            public static IReadWriter<XmlFileOfVSLine> GetLineReadWriter(XmlFileOfVS xml)
+            {
+                return new ReadWriter(xml);
+            }
 
-            internal XmlFileOfVS File { get; set; }
+            private XmlFileOfVS File { get; set; }
             private readonly string memberName;
             private readonly string path;
             private readonly int index;
@@ -49,6 +53,10 @@ namespace Renlen.FileTranslator
                 }
             }
 
+            private XmlFileOfVSLine(Stream stream)
+            {
+                Load(stream);
+            }
             public XmlFileOfVSLine(XmlFileOfVS file, string text, string memberName, string path, int index, LineType type)
             {
                 this.File = file;
@@ -57,6 +65,15 @@ namespace Renlen.FileTranslator
                 this.path = path;
                 this.index = index;
                 this.type = type;
+            }
+
+            private void Load(Stream stream)
+            {
+                
+            }
+            private void Save(Stream stream)
+            {
+
             }
 
             public void CommitResult()

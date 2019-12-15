@@ -75,7 +75,7 @@
             <summary>
             test <see cref="M:Renlen.FileTranslator.XmlFileOfVS.GetTranslatingLines"/> test2
             <para>
-            test<see cref="T:System.DTSubString"/> test 
+            test <see cref="T:System.DTSubString"/> test 
                 <para>
                 testtest
                 </para>
@@ -95,7 +95,7 @@
         </member>
         <member name="M:Renlen.FileTranslator.XmlFileOfVS.Analysis(System.Xml.XmlNode,System.String,System.String,Renlen.FileTranslator.XmlFileOfVS.TempNode)">
             <summary>
-            分析节点
+            分析节点，将分析结果添加到指定缓存节点
             </summary>
             <param name="node"></param>
             <param name="memberName"></param>
@@ -123,16 +123,6 @@
             <param name="stream"></param>
             <returns></returns>
         </member>
-        <member name="T:Renlen.FileTranslator.XmlFileOfVS.TempNode">
-            <summary>
-            表示缓存的一个成员，通过索引器可以根据节点路径获取表示行的节点值
-            </summary>
-        </member>
-        <member name="T:Renlen.FileTranslator.XmlFileOfVS.TempValue">
-            <summary>
-            表示缓存节点值，它可以是单个xml节点，也可以是多个xml节点
-            </summary>
-        </member>
         <member name="F:Renlen.FileTranslator.XmlFileOfVS.ElementType.NoElement">
             <summary>
             表示不是一个元素，而是作为一个类别
@@ -158,6 +148,11 @@
             表示此元素应单独处理，并将前后元素分开
             </summary>
         </member>
+        <member name="T:Renlen.FileTranslator.XmlFileOfVS.TempNode">
+            <summary>
+            表示缓存的一个成员，通过索引器可以根据节点路径获取表示行的节点值
+            </summary>
+        </member>
         <member name="T:Renlen.FileTranslator.XmlFileOfVS.TempNodeCollection">
             <summary>
             表示节点
@@ -169,6 +164,11 @@
             </summary>
             <param name="item"></param>
             <returns></returns>
+        </member>
+        <member name="T:Renlen.FileTranslator.XmlFileOfVS.TempValue">
+            <summary>
+            表示缓存节点值，它可以是单个xml节点，也可以是多个xml节点
+            </summary>
         </member>
     </members>
 </doc>

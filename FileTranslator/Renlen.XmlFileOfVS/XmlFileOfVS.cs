@@ -120,7 +120,7 @@ namespace Renlen.FileTranslator
         /// <param name="stream"></param>
         private void Load(Stream stream)
         {
-            using BinaryReader br = new BinaryReader(stream, Encoding.UTF8/*, true*/);
+            using BinaryReader br = new BinaryReader(stream, Encoding.UTF8, true);
             FullPath = br.ReadString();
             IsFile = !string.IsNullOrWhiteSpace(FullPath);
             fileSize = (FileSize)br.ReadInt64();
@@ -146,7 +146,7 @@ namespace Renlen.FileTranslator
             {
                 length = br.ReadInt32();
                 lines = new List<ITranslatingLine>(length);
-                IReadWriter<ITranslatingLine> readWriter = XmlFileOfVSLine.LineReadWriter;
+                IReadWriter<XmlFileOfVSLine> readWriter = XmlFileOfVSLine.GetLineReadWriter(this);
                 for (int i = 0; i < length; i++)
                 {
                     lines.Add(readWriter.Read(stream));
@@ -155,7 +155,7 @@ namespace Renlen.FileTranslator
         }
         private void Save(Stream stream)
         {
-            using BinaryWriter bw = new BinaryWriter(stream, Encoding.UTF8/*, true*/);
+            using BinaryWriter bw = new BinaryWriter(stream, Encoding.UTF8, true);
             bw.Write(FullPath ?? "");
             bw.Write((long)fileSize);
             //保存xml文件
@@ -176,10 +176,13 @@ namespace Renlen.FileTranslator
             {
                 //保存未翻译完的行
                 bw.Write(lines.Count);
-                IReadWriter<ITranslatingLine> readWriter = XmlFileOfVSLine.LineReadWriter;
+                IReadWriter<XmlFileOfVSLine> readWriter = XmlFileOfVSLine.GetLineReadWriter(null);
                 foreach (ITranslatingLine line in lines)
                 {
-                    readWriter.Write(stream, line);
+                    if (line is XmlFileOfVSLine vsLine)
+                    {
+                        readWriter.Write(stream, vsLine);
+                    }
                 }
             }
             bw.Flush();
@@ -199,7 +202,7 @@ namespace Renlen.FileTranslator
         /// <summary>
         /// test <see cref="GetTranslatingLines"/> test2
         /// <para>
-        /// test<see cref="DTSubString"/> test 
+        /// test <see cref="DTSubString"/> test 
         ///     <para>
         ///     testtest
         ///     </para>
@@ -329,7 +332,7 @@ namespace Renlen.FileTranslator
             }
         }
         /// <summary>
-        /// 分析节点
+        /// 分析节点，将分析结果添加到指定缓存节点
         /// </summary>
         /// <param name="node"></param>
         /// <param name="memberName"></param>
@@ -506,102 +509,6 @@ namespace Renlen.FileTranslator
             XmlDocument xml = new XmlDocument();
             xml.Load(stream);
             return new XmlFileOfVS(xml, @"Workspace\未命名", false);
-        }
-
-        /// <summary>
-        /// 表示缓存的一个成员，通过索引器可以根据节点路径获取表示行的节点值
-        /// </summary>
-        private class TempNode
-        {
-            private readonly Dictionary<string, TempValue> temp = new Dictionary<string, TempValue>();
-            public string Name { get; }
-            public TempValue this[string path]
-            {
-                get => temp.TryGetValue(path, out TempValue value) ? value : null;
-            }
-            public TempNode(string name)
-            {
-                Name = name;
-            }
-            public void Add(string path, XmlNode node)
-            {
-                try
-                {
-                    temp.Add(path, new TempValue(node));
-                }
-                catch
-                {
-                }
-            }
-            public void Add(string path, XmlNode node, int start, int length)
-            {
-                temp.Add(path, new TempValue(node, start, length));
-            }
-        }
-
-        /// <summary>
-        /// 表示缓存节点值，它可以是单个xml节点，也可以是多个xml节点
-        /// </summary>
-        private class TempValue
-        {
-            private XmlNode node;
-            private int startIndex;
-            private int length;
-            public bool IsSingle { get; }
-
-            public TempValue(XmlNode node)
-            {
-                this.node = node;
-                IsSingle = true;
-            }
-
-            public TempValue(XmlNode node, int start, int length)
-            {
-                this.node = node;
-                startIndex = start;
-                this.length = length;
-                IsSingle = false;
-            }
-
-            public void Commit(string result)
-            {
-                if (IsSingle)
-                {
-                    string originalText;
-                    if (node.NodeType == XmlNodeType.Text)
-                    {
-                        originalText = node.Value;
-                        node.Value = $"{result} Original : {originalText}";
-                    }
-                    else
-                    {
-                        originalText = node.InnerXml;
-                        node.InnerXml = $"{result} Original : {originalText}";
-                    }
-                }
-                else
-                {
-                    StringBuilder originalText = new StringBuilder();
-                    for (int i = 0; i < length; i++)
-                    {
-                        if (node.ChildNodes[startIndex].NodeType == XmlNodeType.Text)
-                        {
-                            originalText.Append(node.ChildNodes[startIndex].Value);
-                        }
-                        else
-                        {
-                            originalText.Append(node.ChildNodes[startIndex].OuterXml);
-                        }
-                        node.RemoveChild(node.ChildNodes[startIndex]);
-                    }
-                    XmlNode xmlNode = node.OwnerDocument.CreateElement("resulttemp");
-                    xmlNode.InnerXml = $"{result} Original : {originalText.ToString()}";
-                    for (int i = startIndex; xmlNode.ChildNodes.Count > 0; i++)
-                    {
-                        node.InsertBefore(xmlNode.ChildNodes[0], node.ChildNodes[i]);
-                    }
-                }
-            }
         }
     }
 }

@@ -9,9 +9,10 @@
     <AppDesignerFolder>Properties</AppDesignerFolder>
     <RootNamespace>Renlen.XmlFileOfVS</RootNamespace>
     <AssemblyName>Renlen.XmlFileOfVS</AssemblyName>
-    <TargetFrameworkVersion>v4.0</TargetFrameworkVersion>
+    <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <Deterministic>true</Deterministic>
+    <TargetFrameworkProfile />
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
     <DebugSymbols>true</DebugSymbols>
@@ -23,6 +24,7 @@
     <WarningLevel>4</WarningLevel>
     <LangVersion>8.0</LangVersion>
     <DocumentationFile>..\OutPut\FileType\Renlen.XmlFileOfVS.xml</DocumentationFile>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
     <DebugType>pdbonly</DebugType>
@@ -32,6 +34,7 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
     <LangVersion>8.0</LangVersion>
+    <Prefer32Bit>false</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
@@ -48,7 +51,9 @@
     <Compile Include="XmlFileOfVS.ElementType.cs" />
     <Compile Include="XmlFileOfVS.LineType.cs" />
     <Compile Include="XmlFileOfVS.ReadWriter.cs" />
+    <Compile Include="XmlFileOfVS.TempNode.cs" />
     <Compile Include="XmlFileOfVS.TempNodeCollection.cs" />
+    <Compile Include="XmlFileOfVS.TempValue.cs" />
     <Compile Include="XmlFileOfVS.XmlFileOfVSLine.cs" />
     <Compile Include="XmlFileOfVS.XmlFileOfVSLine.ReadWriter.cs" />
   </ItemGroup>
